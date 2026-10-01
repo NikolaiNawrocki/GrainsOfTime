@@ -57,12 +57,12 @@ export async function submitBookingInquiry(
   const data: BookingSubmission = result.data;
 
   // 2. Safe delivery abstraction
-  const recipientEmail = process.env.BOOKING_RECIPIENT_EMAIL || "booking@grainsoftime.com";
+  const recipientEmail = process.env.BOOKING_RECIPIENT_EMAIL || "ncstategrains@gmail.com";
   const resendApiKey = process.env.RESEND_API_KEY;
 
   if (resendApiKey) {
     try {
-      // In production with Resend API key configured:
+      const fromAddress = process.env.RESEND_FROM_EMAIL || "Grains of Time Booking <onboarding@resend.dev>";
       const response = await fetch("https://api.resend.com/emails", {
         method: "POST",
         headers: {
@@ -70,7 +70,7 @@ export async function submitBookingInquiry(
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          from: "Grains of Time Booking <inquiries@grainsoftime.com>",
+          from: fromAddress,
           to: [recipientEmail],
           reply_to: data.email,
           subject: `New Performance Inquiry: ${data.name} (${data.eventType})`,

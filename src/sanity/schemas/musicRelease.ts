@@ -1,32 +1,44 @@
 import { defineField, defineType } from "sanity";
+import { Disc3 } from "lucide-react";
 
 export const musicRelease = defineType({
   name: "musicRelease",
-  title: "Discography & Music",
+  title: "Discography & Releases",
   type: "document",
+  icon: Disc3,
+  groups: [
+    { name: "basics", title: "Release Info", default: true },
+    { name: "streaming", title: "Streaming Links" },
+    { name: "tracks", title: "Tracklist" },
+  ],
   fields: [
     defineField({
       name: "title",
       title: "Release Title",
       type: "string",
+      group: "basics",
       validation: (Rule) => Rule.required(),
+      description: "The name of this album, EP, or single (e.g. 'Standard Procedure').",
     }),
     defineField({
       name: "releaseYear",
       title: "Release Year",
       type: "string",
+      group: "basics",
       validation: (Rule) => Rule.required(),
+      description: "e.g. '2024' or '2019'.",
     }),
     defineField({
       name: "releaseType",
-      title: "Release Type",
+      title: "Format / Type",
       type: "string",
+      group: "basics",
       options: {
         list: [
-          { title: "Album / LP", value: "Album" },
-          { title: "EP", value: "EP" },
+          { title: "Full Album (LP)", value: "Album" },
+          { title: "EP (Extended Play)", value: "EP" },
           { title: "Single", value: "Single" },
-          { title: "Live Recording", value: "Live Recording" },
+          { title: "Live Concert Recording", value: "Live Recording" },
         ],
       },
       initialValue: "Album",
@@ -36,32 +48,48 @@ export const musicRelease = defineType({
       name: "coverArt",
       title: "Cover Artwork",
       type: "image",
-      options: {
-        hotspot: true,
-      },
+      group: "basics",
+      options: { hotspot: true },
+      description: "Upload the high-res cover art. Click the crop icon to set the focal center.",
       fields: [
         defineField({
           name: "alt",
-          title: "Alternative Text",
+          title: "Artwork Description",
           type: "string",
+          description: "Accessibility description (e.g. 'Album cover of Standard Procedure').",
         }),
       ],
     }),
     defineField({
+      name: "notes",
+      title: "Liner Notes & Credits",
+      type: "text",
+      rows: 4,
+      group: "basics",
+      description: "Production credits, studio info, soloists, sound engineering, and acknowledgments.",
+    }),
+    // Streaming Links
+    defineField({
       name: "spotifyUrl",
-      title: "Spotify URL (Optional)",
+      title: "Spotify Album / Track Link",
       type: "url",
-      description: "Direct link to album/single on Spotify.",
+      group: "streaming",
+      description: "Direct URL to listen on Spotify. Leave blank if not available.",
     }),
     defineField({
       name: "appleMusicUrl",
-      title: "Apple Music URL (Optional)",
+      title: "Apple Music Link",
       type: "url",
+      group: "streaming",
+      description: "Direct URL to listen on Apple Music. Leave blank if not available.",
     }),
+    // Tracklist
     defineField({
       name: "tracklist",
       title: "Tracklist",
       type: "array",
+      group: "tracks",
+      description: "Add recorded tracks in album playback order.",
       of: [
         {
           type: "object",
@@ -73,19 +101,20 @@ export const musicRelease = defineType({
             }),
             defineField({
               name: "title",
-              title: "Song Title",
+              title: "Track Title",
               type: "string",
               validation: (Rule) => Rule.required(),
             }),
             defineField({
               name: "originalArtist",
-              title: "Original Artist",
+              title: "Original Artist / Composer",
               type: "string",
             }),
             defineField({
               name: "soloist",
-              title: "Soloist(s)",
+              title: "Featured Soloist(s)",
               type: "string",
+              description: "e.g. 'John Doe (Lead), Alex Smith (Vocal Percussion)'",
             }),
           ],
           preview: {
@@ -103,12 +132,6 @@ export const musicRelease = defineType({
           },
         },
       ],
-    }),
-    defineField({
-      name: "notes",
-      title: "Credits & Liner Notes",
-      type: "text",
-      rows: 4,
     }),
   ],
   preview: {

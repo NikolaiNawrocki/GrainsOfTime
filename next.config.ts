@@ -41,6 +41,15 @@ const nextConfig: NextConfig = {
       },
     ];
   },
+  async redirects() {
+    return [
+      {
+        source: "/music",
+        destination: "https://open.spotify.com/artist/4oHl4fefbY77maGXUyGZeW?si=mVbG3OowSiGR2XN1FCG6jg",
+        permanent: false,
+      },
+    ];
+  },
 };
 
 export default nextConfig;

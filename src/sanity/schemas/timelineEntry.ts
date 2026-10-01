@@ -1,22 +1,31 @@
 import { defineField, defineType } from "sanity";
+import { Clock } from "lucide-react";
 
 export const timelineEntry = defineType({
   name: "timelineEntry",
-  title: "Timeline & History",
+  title: "History & Timeline",
   type: "document",
+  icon: Clock,
   fields: [
     defineField({
       name: "year",
       title: "Year / Date Range",
       type: "string",
-      description: "e.g. '1968', '1974–1978', '1995', or 'Present Day'.",
+      description: 'e.g. "1968", "1974–1978", or "Present Day".',
+      validation: (Rule) => Rule.required(),
+    }),
+    defineField({
+      name: "headline",
+      title: "Milestone Headline",
+      type: "string",
+      description: 'A clear headline for this milestone (e.g. "Grains of Time Founded").',
       validation: (Rule) => Rule.required(),
     }),
     defineField({
       name: "era",
       title: "Era Label",
       type: "string",
-      description: "e.g. 'The Inception', 'Campus Tradition', 'Modern Collegiate Era'.",
+      description: 'Which period does this belong to? e.g. "The Inception", "Campus Tradition", "Modern Era".',
       validation: (Rule) => Rule.required(),
     }),
     defineField({
@@ -34,19 +43,7 @@ export const timelineEntry = defineType({
           { title: "2020s & Present", value: "2020s" },
         ],
       },
-      validation: (Rule) => Rule.required(),
-    }),
-    defineField({
-      name: "headline",
-      title: "Milestone Headline",
-      type: "string",
-      validation: (Rule) => Rule.required(),
-    }),
-    defineField({
-      name: "order",
-      title: "Chronological Sort Order",
-      type: "number",
-      initialValue: 10,
+      description: "Used to group milestones on the interactive timeline.",
       validation: (Rule) => Rule.required(),
     }),
     defineField({
@@ -54,20 +51,27 @@ export const timelineEntry = defineType({
       title: "Historical Narrative",
       type: "text",
       rows: 5,
-      description: "Verified historical account. (Do not invent unverified historical claims).",
+      description: "Tell the story of this milestone. What occurred and why was it significant?",
+      validation: (Rule) => Rule.required(),
+    }),
+    defineField({
+      name: "order",
+      title: "Sort Position",
+      type: "number",
+      initialValue: 10,
+      description: "Lower numbers appear earlier in the timeline. Use 10, 20, 30 for flexible reordering.",
       validation: (Rule) => Rule.required(),
     }),
     defineField({
       name: "archivalImage",
-      title: "Archival Photograph / Document",
+      title: "Historical Photo / Document",
       type: "image",
-      options: {
-        hotspot: true,
-      },
+      options: { hotspot: true },
+      description: "Archival photograph, ticket stub, program scan, or historical media.",
       fields: [
         defineField({
           name: "alt",
-          title: "Alternative Text",
+          title: "Alternative Description (for screen readers)",
           type: "string",
         }),
         defineField({
@@ -79,7 +83,7 @@ export const timelineEntry = defineType({
           name: "credit",
           title: "Source / Archival Credit",
           type: "string",
-          description: "e.g. NC State Special Collections, Grains of Time Archive, or specific alumnus.",
+          description: 'e.g. "NC State Special Collections", "Grains of Time Archive", or donor name.',
         }),
       ],
     }),
@@ -93,7 +97,7 @@ export const timelineEntry = defineType({
     },
     prepare({ title, year, era, media }) {
       return {
-        title: `[${year}] ${title}`,
+        title: `${year} — ${title}`,
         subtitle: era,
         media,
       };

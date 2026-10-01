@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { Menu, X, ArrowUpRight } from "lucide-react";
 
@@ -18,8 +19,9 @@ const navLinks: NavLink[] = [
   { href: "/history", label: "Living Archive" },
   { href: "/repertoire", label: "Repertoire" },
   { href: "/gallery", label: "Gallery" },
-  { href: "/music", label: "Music" },
   { href: "/merch", label: "Merch" },
+  { href: "https://open.spotify.com/artist/4oHl4fefbY77maGXUyGZeW?si=mVbG3OowSiGR2XN1FCG6jg", label: "Listen on Spotify", isExternal: true },
+  { href: "https://www.gofundme.com/f/grainsoftime", label: "Support (GoFundMe)", isExternal: true },
   { href: "/book", label: "Book Us" },
 ];
 
@@ -51,7 +53,7 @@ export function MobileNav() {
         onClick={() => setIsOpen(!isOpen)}
         aria-label={isOpen ? "Close navigation menu" : "Open navigation menu"}
         aria-expanded={isOpen}
-        className="p-2 text-zinc-300 hover:text-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-grains-red rounded-sm"
+        className="p-2 text-grains-black/80 hover:text-grains-black transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-grains-red rounded-sm"
       >
         {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
       </button>
@@ -61,42 +63,64 @@ export function MobileNav() {
           role="dialog"
           aria-modal="true"
           aria-label="Navigation Menu"
-          className="fixed inset-0 top-[65px] z-50 bg-grains-black/98 backdrop-blur-md flex flex-col justify-between p-6 overflow-y-auto border-t border-grains-border animate-fade-in"
+          className="fixed inset-0 top-[73px] z-50 bg-grains-white/98 backdrop-blur-md flex flex-col justify-between p-6 overflow-y-auto border-t border-grains-border animate-fade-in shadow-xl"
         >
-          <nav className="space-y-6 pt-4">
-            <span className="text-[10px] font-mono tracking-[0.25em] text-zinc-500 uppercase block mb-4">
-              Navigation Index
-            </span>
+          <nav className="space-y-6 pt-2">
+            <div className="flex items-center justify-between pb-4 border-b border-grains-border">
+              <span className="text-[10px] font-mono tracking-[0.25em] text-grains-muted uppercase block">
+                Navigation Index
+              </span>
+              <div className="w-8 h-8 rounded-full bg-grains-black p-1.5 flex items-center justify-center border border-grains-border">
+                <Image
+                  src="/GrainsPhotos/grains-logo-.PNG"
+                  alt="Grains of Time Logo"
+                  width={24}
+                  height={24}
+                  className="w-full h-full object-contain"
+                />
+              </div>
+            </div>
             <ul className="space-y-4">
               {navLinks.map((link) => {
                 const isActive = pathname === link.href;
                 return (
                   <li key={link.href}>
-                    <Link
-                      href={link.href}
-                      className={`text-2xl font-serif tracking-tight flex items-center justify-between transition-colors ${
-                        isActive
-                          ? "text-grains-red-bright font-medium"
-                          : "text-grains-paper hover:text-white"
-                      }`}
-                    >
-                      <span>{link.label}</span>
-                      {link.isExternal && <ArrowUpRight className="w-4 h-4 text-zinc-500" />}
-                    </Link>
+                    {link.isExternal ? (
+                      <a
+                        href={link.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-2xl font-serif tracking-tight flex items-center justify-between transition-colors text-grains-black hover:text-grains-red"
+                      >
+                        <span>{link.label}</span>
+                        <ArrowUpRight className="w-4 h-4 text-grains-muted" />
+                      </a>
+                    ) : (
+                      <Link
+                        href={link.href}
+                        className={`text-2xl font-serif tracking-tight flex items-center justify-between transition-colors ${
+                          isActive
+                            ? "text-grains-red font-medium"
+                            : "text-grains-black hover:text-grains-red"
+                        }`}
+                      >
+                        <span>{link.label}</span>
+                      </Link>
+                    )}
                   </li>
                 );
               })}
             </ul>
           </nav>
 
-          <div className="pt-8 border-t border-zinc-800 space-y-4">
-            <div className="text-xs font-mono text-zinc-500 tracking-wider">
+          <div className="pt-8 border-t border-grains-border space-y-4">
+            <div className="text-xs font-mono text-grains-muted tracking-wider">
               <p>NC STATE UNIVERSITY</p>
               <p>FOUNDED 1968 • RALEIGH, NC</p>
             </div>
             <Link
               href="/book"
-              className="block w-full py-3 text-center bg-grains-red hover:bg-grains-red-bright text-white font-mono text-xs tracking-widest uppercase rounded-sm transition-colors"
+              className="block w-full py-3 text-center bg-grains-red hover:bg-grains-red-bright text-white font-mono text-xs tracking-widest uppercase rounded-sm transition-colors shadow-subtle"
             >
               Inquire / Book Ensemble
             </Link>

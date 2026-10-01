@@ -51,16 +51,16 @@ export function Lightbox({
 
   if (!isOpen || !currentItem) return null;
 
-  const imageUrl = currentItem.image?.asset
-    ? urlForImage(currentItem.image)?.url()
-    : null;
+  const imageUrl =
+    currentItem.imageUrl ||
+    (currentItem.image?.asset ? urlForImage(currentItem.image)?.url() : null);
 
   return (
     <div
       role="dialog"
       aria-modal="true"
       aria-label={currentItem.title || "Gallery photo viewer"}
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/95 p-4 sm:p-6 backdrop-blur-sm"
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black/95 p-4 sm:p-6 backdrop-blur-md"
       onClick={onClose}
     >
       {/* Close button */}
@@ -68,7 +68,7 @@ export function Lightbox({
         type="button"
         onClick={onClose}
         aria-label="Close photo viewer"
-        className="absolute top-5 right-5 z-50 p-2 text-zinc-400 hover:text-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-grains-red rounded-sm"
+        className="absolute top-5 right-5 z-50 p-2 text-slate-400 hover:text-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-grains-red rounded-sm"
       >
         <X className="w-7 h-7" />
       </button>
@@ -82,7 +82,7 @@ export function Lightbox({
             onNavigate(currentIndex - 1);
           }}
           aria-label="Previous photo"
-          className="absolute left-4 top-1/2 -translate-y-1/2 z-50 p-3 text-zinc-400 hover:text-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-grains-red rounded-sm bg-black/40 hover:bg-black/80"
+          className="absolute left-4 top-1/2 -translate-y-1/2 z-50 p-3 text-slate-300 hover:text-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-grains-red rounded-sm bg-black/60 hover:bg-black border border-white/10"
         >
           <ChevronLeft className="w-8 h-8" />
         </button>
@@ -97,7 +97,7 @@ export function Lightbox({
             onNavigate(currentIndex + 1);
           }}
           aria-label="Next photo"
-          className="absolute right-4 top-1/2 -translate-y-1/2 z-50 p-3 text-zinc-400 hover:text-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-grains-red rounded-sm bg-black/40 hover:bg-black/80"
+          className="absolute right-4 top-1/2 -translate-y-1/2 z-50 p-3 text-slate-300 hover:text-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-grains-red rounded-sm bg-black/60 hover:bg-black border border-white/10"
         >
           <ChevronRight className="w-8 h-8" />
         </button>
@@ -112,43 +112,35 @@ export function Lightbox({
           {imageUrl ? (
             <Image
               src={imageUrl}
-              alt={currentItem.image.alt || currentItem.title}
+              alt={currentItem.image?.alt || currentItem.title}
               fill
               className="object-contain"
               sizes="90vw"
             />
           ) : (
-            <div className="w-full h-full max-w-2xl flex flex-col items-center justify-center p-8 bg-zinc-900/60 border border-zinc-800 rounded-sm text-center">
-              <span className="text-xs font-mono tracking-widest text-zinc-500 uppercase mb-2">
+            <div className="w-full h-full max-w-2xl flex flex-col items-center justify-center p-8 bg-zinc-900/90 border border-white/15 rounded-sm text-center">
+              <span className="text-xs font-mono tracking-widest text-slate-400 uppercase mb-2">
                 Gallery Photograph
               </span>
-              <h3 className="text-xl font-serif text-zinc-300 mb-2">
+              <h3 className="text-xl font-serif text-white mb-2">
                 {currentItem.title}
               </h3>
-              <p className="text-sm text-zinc-500 max-w-md">
-                {currentItem.caption || "Verified photographic record pending addition by media director."}
-              </p>
             </div>
           )}
         </div>
 
         {/* Caption & Metadata */}
-        <div className="w-full mt-4 flex flex-col sm:flex-row sm:items-baseline justify-between text-zinc-300 border-t border-zinc-800/80 pt-3 gap-2">
+        <div className="w-full mt-4 flex flex-col sm:flex-row sm:items-baseline justify-between text-slate-300 border-t border-white/15 pt-3 gap-2">
           <div>
-            <h4 className="text-base font-serif font-medium text-grains-paper">
+            <h4 className="text-base font-serif font-medium text-white">
               {currentItem.title}
             </h4>
-            {currentItem.caption && (
-              <p className="text-sm text-zinc-400 font-sans mt-0.5">
-                {currentItem.caption}
-              </p>
-            )}
           </div>
-          <div className="text-right text-xs font-mono text-zinc-500 tracking-wider uppercase">
+          <div className="text-right text-xs font-mono text-slate-400 tracking-wider uppercase">
             {currentItem.photographerCredit && (
               <span className="block">Credit: {currentItem.photographerCredit}</span>
             )}
-            <span className="block text-[11px] text-zinc-600">
+            <span className="block text-[11px] text-slate-500">
               {currentIndex + 1} of {items.length}
             </span>
           </div>

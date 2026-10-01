@@ -8,6 +8,8 @@ import {
   fallbackGallery,
   fallbackRepertoire,
   fallbackReleases,
+  fallbackHomePage,
+  fallbackAboutPage,
 } from "@/lib/data/fallbackContent";
 import {
   SiteSettings,
@@ -17,6 +19,8 @@ import {
   GalleryItem,
   RepertoireItem,
   MusicRelease,
+  HomePageData,
+  AboutPageData,
 } from "@/types";
 
 // GROQ Queries
@@ -25,7 +29,10 @@ export const siteSettingsQuery = groq`
 `;
 
 export const membersQuery = groq`
-  *[_type == "member"] | order(order asc, name asc)
+  *[_type == "member"] {
+    ...,
+    "slug": coalesce(slug.current, slug)
+  } | order(order asc, name asc)
 `;
 
 export const eventsQuery = groq`
@@ -52,7 +59,31 @@ export const musicReleasesQuery = groq`
   *[_type == "musicRelease"] | order(releaseYear desc)
 `;
 
+export const homePageQuery = groq`
+  *[_type == "homePage"][0]
+`;
+
+export const aboutPageQuery = groq`
+  *[_type == "aboutPage"][0]
+`;
+
 // Resilient Data Loaders with verified fallbacks
+export async function getHomePage(): Promise<HomePageData> {
+  const data = await sanityFetch<HomePageData>({
+    query: homePageQuery,
+    tags: ["homePage"],
+  });
+  return data || fallbackHomePage;
+}
+
+export async function getAboutPage(): Promise<AboutPageData> {
+  const data = await sanityFetch<AboutPageData>({
+    query: aboutPageQuery,
+    tags: ["aboutPage"],
+  });
+  return data || fallbackAboutPage;
+}
+
 export async function getSiteSettings(): Promise<SiteSettings> {
   const data = await sanityFetch<SiteSettings>({
     query: siteSettingsQuery,

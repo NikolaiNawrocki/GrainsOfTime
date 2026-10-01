@@ -11,7 +11,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/history",
     "/repertoire",
     "/gallery",
-    "/music",
     "/merch",
     "/book",
   ];

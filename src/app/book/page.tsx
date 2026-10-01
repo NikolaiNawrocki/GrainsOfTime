@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { BookingForm } from "@/components/forms/BookingForm";
 import { SectionHeading } from "@/components/ui/SectionHeading";
+import { ScrollReveal } from "@/components/ui/ScrollReveal";
 import { Mic, Volume2, Clock, HelpCircle } from "lucide-react";
 
 export const metadata: Metadata = {
@@ -47,71 +48,79 @@ export default function BookPage() {
   ];
 
   return (
-    <div className="py-16 sm:py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="py-16 sm:py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 bg-grains-white">
       {/* Header */}
-      <div className="mb-14 max-w-3xl">
-        <SectionHeading
-          eyebrow="Commission & Hire"
-          title="Bring the Sound to Your Event"
-          subtitle="From NC State university convocations to private celebrations and masterclasses, Grains of Time brings unforgettable vocal energy to every stage."
-        />
-      </div>
+      <ScrollReveal direction="up" distance={16} duration={600}>
+        <div className="mb-14 max-w-3xl">
+          <SectionHeading
+            eyebrow="Commission & Hire"
+            title="Bring the Sound to Your Event"
+            subtitle="From NC State university convocations to private celebrations and masterclasses, Grains of Time brings unforgettable vocal energy to every stage."
+          />
+        </div>
+      </ScrollReveal>
 
       {/* Main Grid: Form + Guidelines */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
         {/* Left Column: Secure Inquiry Form */}
         <div className="lg:col-span-7">
-          <BookingForm />
+          <ScrollReveal direction="up" distance={20} duration={650}>
+            <BookingForm />
+          </ScrollReveal>
         </div>
 
         {/* Right Column: Technical Rider & FAQs */}
         <div className="lg:col-span-5 space-y-8">
           {/* Performance Guidelines Card */}
-          <div className="p-6 sm:p-8 bg-grains-surface border border-grains-border rounded-sm space-y-6">
-            <h3 className="text-xs font-mono uppercase tracking-[0.25em] text-grains-paper font-semibold">
-              Performance Guidelines & Rider
-            </h3>
-            <div className="space-y-5">
-              {technicalGuidelines.map((item) => {
-                const Icon = item.icon;
-                return (
-                  <div key={item.title} className="flex gap-4">
-                    <div className="w-8 h-8 rounded-sm bg-zinc-900 border border-zinc-800 flex items-center justify-center shrink-0">
-                      <Icon className="w-4 h-4 text-grains-red" />
+          <ScrollReveal direction="up" distance={20} duration={650} delay={100}>
+            <div className="p-6 sm:p-8 bg-grains-cream border border-grains-border rounded-sm space-y-6 shadow-subtle">
+              <h3 className="text-xs font-mono uppercase tracking-[0.25em] text-grains-black font-semibold">
+                Performance Guidelines & Rider
+              </h3>
+              <div className="space-y-5">
+                {technicalGuidelines.map((item) => {
+                  const Icon = item.icon;
+                  return (
+                    <div key={item.title} className="flex gap-4">
+                      <div className="w-8 h-8 rounded-sm bg-white border border-grains-border flex items-center justify-center shrink-0">
+                        <Icon className="w-4 h-4 text-grains-red" />
+                      </div>
+                      <div className="space-y-1">
+                        <h4 className="text-sm font-serif text-grains-black font-medium">
+                          {item.title}
+                        </h4>
+                        <p className="text-xs text-grains-text/80 font-sans leading-relaxed">
+                          {item.description}
+                        </p>
+                      </div>
                     </div>
-                    <div className="space-y-1">
-                      <h4 className="text-sm font-serif text-grains-paper">
-                        {item.title}
-                      </h4>
-                      <p className="text-xs text-zinc-400 font-sans leading-relaxed">
-                        {item.description}
-                      </p>
-                    </div>
-                  </div>
-                );
-              })}
+                  );
+                })}
+              </div>
             </div>
-          </div>
+          </ScrollReveal>
 
           {/* Quick FAQs */}
-          <div className="p-6 sm:p-8 bg-grains-surface border border-grains-border rounded-sm space-y-6">
-            <div className="flex items-center gap-2 text-xs font-mono uppercase tracking-[0.25em] text-grains-paper font-semibold">
-              <HelpCircle className="w-4 h-4 text-grains-red" />
-              <span>Frequently Asked Questions</span>
+          <ScrollReveal direction="up" distance={20} duration={650} delay={180}>
+            <div className="p-6 sm:p-8 bg-grains-cream border border-grains-border rounded-sm space-y-6 shadow-subtle">
+              <div className="flex items-center gap-2 text-xs font-mono uppercase tracking-[0.25em] text-grains-black font-semibold">
+                <HelpCircle className="w-4 h-4 text-grains-red" />
+                <span>Frequently Asked Questions</span>
+              </div>
+              <div className="space-y-4">
+                {faqs.map((faq) => (
+                  <div key={faq.q} className="space-y-1">
+                    <h4 className="text-sm font-serif text-grains-black font-medium">
+                      {faq.q}
+                    </h4>
+                    <p className="text-xs text-grains-text/80 font-sans leading-relaxed">
+                      {faq.a}
+                    </p>
+                  </div>
+                ))}
+              </div>
             </div>
-            <div className="space-y-4">
-              {faqs.map((faq) => (
-                <div key={faq.q} className="space-y-1">
-                  <h4 className="text-sm font-serif text-grains-paper">
-                    {faq.q}
-                  </h4>
-                  <p className="text-xs text-zinc-400 font-sans leading-relaxed">
-                    {faq.a}
-                  </p>
-                </div>
-              ))}
-            </div>
-          </div>
+          </ScrollReveal>
         </div>
       </div>
     </div>

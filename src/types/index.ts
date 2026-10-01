@@ -3,7 +3,8 @@ export type VocalPart =
   | "Tenor 2"
   | "Baritone"
   | "Bass"
-  | "Vocal Percussion";
+  | "Vocal Percussion"
+  | string;
 
 export interface SanityImageCrop {
   top: number;
@@ -25,6 +26,7 @@ export interface SanityImage {
     _ref: string;
     _type: "reference";
   };
+  imageUrl?: string;
   alt: string;
   caption?: string;
   credit?: string;
@@ -63,6 +65,7 @@ export interface Member {
   status: "active" | "alumni";
   order: number;
   portrait?: SanityImage;
+  imageUrl?: string;
   graduationYear?: number | string;
   major?: string;
   leadershipRole?: string;
@@ -116,8 +119,9 @@ export interface GalleryItem {
   year?: string;
   photographerCredit?: string;
   caption?: string;
-  image: SanityImage;
-  tags: ("concert" | "rehearsal" | "travel" | "archival" | "backstage")[];
+  imageUrl?: string;
+  image?: SanityImage;
+  tags: ("concert" | "rehearsal" | "travel" | "archival" | "backstage" | "mediaday" | "2026-concert" | "2025-concert" | string)[];
   featured?: boolean;
   isPlaceholder?: boolean;
 }
@@ -127,7 +131,7 @@ export interface RepertoireItem {
   title: string;
   originalArtist?: string;
   arranger?: string;
-  category?: "Contemporary Pop" | "Classic Rock" | "Soul & R&B" | "NC State Tradition" | "Ballad";
+  category?: "Contemporary Pop" | "Classic Rock" | "Soul & R&B" | "Country" | "NC State Tradition" | "Ballad";
   yearPerformed?: string;
   status: "current" | "archived";
   listeningUrl?: string;
@@ -167,3 +171,51 @@ export interface BookingSubmission {
   consent: boolean;
   honeypot?: string;
 }
+
+export interface QuickLinkItem {
+  title: string;
+  description?: string;
+  linkUrl?: string;
+  actionText?: string;
+}
+
+export interface HomePageData {
+  _id?: string;
+  heroImage?: SanityImage;
+  heroHeading?: string;
+  heroSubtitle?: string;
+  heroTagline?: string;
+  heroDescription?: string;
+  pullQuoteText?: string;
+  pullQuoteAttribution?: string;
+  pullQuoteEyebrow?: string;
+  quickLinks?: QuickLinkItem[];
+  showFeaturedEvent?: boolean;
+  galleryCount?: number;
+  primaryCtaText?: string;
+  primaryCtaLink?: string;
+  secondaryCtaText?: string;
+  secondaryCtaLink?: string;
+}
+
+export interface ValueItem {
+  title: string;
+  description: string;
+}
+
+export interface AboutPageData {
+  _id?: string;
+  heading?: string;
+  subtitle?: string;
+  heroImage?: SanityImage;
+  storyEyebrow?: string;
+  storyBody?: any[]; // Block content
+  pullQuote?: {
+    quote?: string;
+    attribution?: string;
+  };
+  missionHeading?: string;
+  missionText?: string;
+  valuesItems?: ValueItem[];
+}
+

@@ -48,25 +48,25 @@ export function Modal({
       role="dialog"
       aria-modal="true"
       aria-label={title}
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/85 p-4 sm:p-6 backdrop-blur-sm"
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4 sm:p-6 backdrop-blur-sm"
       onClick={onClose}
     >
       <div
         className={cn(
-          "relative w-full max-w-lg bg-grains-surface border border-grains-border rounded-sm p-6 sm:p-8 shadow-editorial text-grains-paper animate-fade-in-up",
+          "relative w-full max-w-lg max-h-[90vh] overflow-y-auto bg-grains-white border border-grains-border rounded-sm p-6 sm:p-8 shadow-editorial text-grains-text animate-fade-in-up",
           className
         )}
         onClick={(e) => e.stopPropagation()}
       >
         <div className="flex items-center justify-between pb-4 border-b border-grains-border">
-          <h3 className="text-xl font-serif font-normal text-grains-paper">
+          <h3 className="text-xl font-serif font-normal text-grains-black">
             {title}
           </h3>
           <button
             type="button"
             onClick={onClose}
             aria-label="Close dialog"
-            className="p-1.5 text-zinc-400 hover:text-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-grains-red rounded-sm"
+            className="p-1.5 text-grains-muted hover:text-grains-black transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-grains-red rounded-sm"
           >
             <X className="w-5 h-5" />
           </button>

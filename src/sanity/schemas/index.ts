@@ -1,4 +1,6 @@
 import { siteSettings } from "./siteSettings";
+import { homePage } from "./homePage";
+import { aboutPage } from "./aboutPage";
 import { page } from "./page";
 import { member } from "./member";
 import { event } from "./event";
@@ -10,6 +12,8 @@ import { bookingInquiry } from "./bookingInquiry";
 
 export const schemaTypes = [
   siteSettings,
+  homePage,
+  aboutPage,
   page,
   member,
   event,

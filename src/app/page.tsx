@@ -1,5 +1,6 @@
 import {
   getSiteSettings,
+  getHomePage,
   getUpcomingEvents,
   getGalleryItems,
 } from "@/lib/sanity/queries";
@@ -12,19 +13,24 @@ import { InstagramShowcase } from "@/components/home/InstagramShowcase";
 export const revalidate = 60; // ISR cache for 60 seconds
 
 export default async function HomePage() {
-  const [settings, upcomingEvents, galleryItems] = await Promise.all([
+  const [settings, homeContent, upcomingEvents, galleryItems] = await Promise.all([
     getSiteSettings(),
+    getHomePage(),
     getUpcomingEvents(),
     getGalleryItems(),
   ]);
 
+  const showEvents = homeContent?.showFeaturedEvent !== false;
+  const galleryCount = homeContent?.galleryCount || 6;
+  const filteredGallery = galleryItems.slice(0, galleryCount);
+
   return (
     <div className="flex flex-col w-full">
-      <HeroSection settings={settings} />
-      <EditorialStatement />
-      <FeaturedEventCard events={upcomingEvents} />
+      <HeroSection settings={settings} content={homeContent} />
+      <EditorialStatement content={homeContent} />
+      {showEvents && <FeaturedEventCard events={upcomingEvents} />}
       <ArchivalFeature />
-      <InstagramShowcase galleryItems={galleryItems} />
+      <InstagramShowcase galleryItems={filteredGallery} />
     </div>
   );
 }

@@ -10,26 +10,52 @@ const config: Config = {
     extend: {
       colors: {
         grains: {
-          black: "#0A0A0C",
-          surface: "#121215",
-          "surface-elevated": "#1A1A1F",
-          "surface-highlight": "#24242B",
-          border: "#26262D",
-          "border-subtle": "#1B1B22",
-          paper: "#F7F6F2",
-          "paper-dim": "#D8D6CF",
-          muted: "#989791",
-          subtle: "#5E5D58",
-          red: "#CC0000",
-          "red-bright": "#E61B23",
-          "red-deep": "#8B0000",
-          "red-subtle": "rgba(204, 0, 0, 0.12)",
-          "red-border": "rgba(204, 0, 0, 0.35)",
+          // Primary Black & Deep Dark Accents
+          black: "#111111",
+          "black-deep": "#080808",
+          "black-light": "#1C1C1C",
+          "black-muted": "#2C2C2C",
+
+          // Sophisticated Red Accents
+          red: "#B4232F",
+          "red-bright": "#D63442",
+          "red-deep": "#821822",
+          "red-subtle": "rgba(180, 35, 47, 0.08)",
+          "red-border": "rgba(180, 35, 47, 0.22)",
+
+          // Warm Light Surfaces & Neutrals
+          white: "#FAF9F6",
+          cream: "#F3F0EA",
+          "cream-dark": "#E9E5DD",
+          "gray-light": "#F0EFEA",
+
+          // Body Text & Secondary Text
+          text: "#121212",
+          muted: "#595959",
+          subtle: "#8C8C8C",
+
+          // Structural Elements
+          border: "#E2E0D8",
+          "border-subtle": "#EBE8E1",
+          surface: "#FFFFFF",
+          "surface-cream": "#F3F0EA",
+          "surface-muted": "#F5F3ED",
+
+          // Compatibility aliases (mapped to black so any lingering navy classes render black)
+          navy: "#111111",
+          "navy-deep": "#080808",
+          "navy-light": "#1C1C1C",
+          "navy-muted": "#2C2C2C",
+          paper: "#FAF9F6",
+          "paper-dim": "#F3F0EA",
+          "surface-elevated": "#FFFFFF",
+          "surface-highlight": "#F0EFEA",
         },
       },
       fontFamily: {
-        serif: ["var(--font-editorial)", "Georgia", "Cambria", "Times New Roman", "serif"],
-        sans: ["var(--font-sans)", "Inter", "-apple-system", "BlinkMacSystemFont", "Segoe UI", "Roboto", "sans-serif"],
+        sans: ["'Urbanist'", "var(--font-sans)", "Inter", "-apple-system", "BlinkMacSystemFont", "Segoe UI", "Roboto", "sans-serif"],
+        serif: ["'Urbanist'", "var(--font-editorial)", "-apple-system", "BlinkMacSystemFont", "sans-serif"],
+        urbanist: ["'Urbanist'", "sans-serif"],
         mono: ["var(--font-mono)", "JetBrains Mono", "SFMono-Regular", "Menlo", "monospace"],
       },
       letterSpacing: {
@@ -49,8 +75,9 @@ const config: Config = {
         full: "9999px",
       },
       boxShadow: {
-        editorial: "0 1px 1px rgba(0,0,0,0.4), 0 8px 32px rgba(0,0,0,0.6)",
-        accent: "0 0 40px -10px rgba(204, 0, 0, 0.25)",
+        editorial: "0 4px 20px -2px rgba(0, 0, 0, 0.08), 0 2px 6px -1px rgba(0, 0, 0, 0.04)",
+        subtle: "0 1px 3px rgba(0, 0, 0, 0.05), 0 1px 2px rgba(0, 0, 0, 0.03)",
+        accent: "0 8px 30px -4px rgba(180, 35, 47, 0.15)",
       },
       animation: {
         "fade-in": "fadeIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards",

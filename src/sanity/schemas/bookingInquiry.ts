@@ -1,10 +1,13 @@
 import { defineField, defineType } from "sanity";
+import { Inbox } from "lucide-react";
 
 export const bookingInquiry = defineType({
   name: "bookingInquiry",
-  title: "Booking Inquiries",
+  title: "Booking Requests",
   type: "document",
-  readOnly: true, // Inquiries are submitted from the public form and reviewed here
+  icon: Inbox,
+  readOnly: true,
+  description: "Inquiries submitted via the public /book form. Status can be updated as you coordinate with the client.",
   fields: [
     defineField({
       name: "name",
@@ -13,12 +16,12 @@ export const bookingInquiry = defineType({
     }),
     defineField({
       name: "organization",
-      title: "Organization / Client",
+      title: "Organization / Event Host",
       type: "string",
     }),
     defineField({
       name: "email",
-      title: "Email Address",
+      title: "Contact Email",
       type: "string",
     }),
     defineField({
@@ -28,17 +31,17 @@ export const bookingInquiry = defineType({
     }),
     defineField({
       name: "eventDate",
-      title: "Proposed Event Date",
+      title: "Requested Performance Date",
       type: "string",
     }),
     defineField({
       name: "venue",
-      title: "Venue / City",
+      title: "Venue & City",
       type: "string",
     }),
     defineField({
       name: "eventType",
-      title: "Event Type",
+      title: "Type of Event",
       type: "string",
     }),
     defineField({
@@ -48,7 +51,7 @@ export const bookingInquiry = defineType({
     }),
     defineField({
       name: "message",
-      title: "Performance Request Details",
+      title: "Event Details & Notes",
       type: "text",
       rows: 4,
     }),
@@ -59,18 +62,19 @@ export const bookingInquiry = defineType({
     }),
     defineField({
       name: "inquiryStatus",
-      title: "Status",
+      title: "Status Workflow",
       type: "string",
       options: {
         list: [
-          { title: "New / Unread", value: "new" },
-          { title: "In Communication", value: "contacted" },
-          { title: "Confirmed Booking", value: "confirmed" },
-          { title: "Archived / Declined", value: "archived" },
+          { title: "● New / Unread", value: "new" },
+          { title: "◐ In Communication", value: "contacted" },
+          { title: "✓ Confirmed Booking", value: "confirmed" },
+          { title: "✕ Declined / Archived", value: "archived" },
         ],
       },
       initialValue: "new",
-      readOnly: false, // Officers can update the status
+      readOnly: false,
+      description: "Update this status as the Business Manager coordinates with the requester.",
     }),
   ],
   preview: {
@@ -81,9 +85,15 @@ export const bookingInquiry = defineType({
       status: "inquiryStatus",
     },
     prepare({ name, org, date, status }) {
+      const statusLabel: Record<string, string> = {
+        new: "● New",
+        contacted: "◐ Contacted",
+        confirmed: "✓ Confirmed",
+        archived: "✕ Archived",
+      };
       return {
-        title: `${name} ${org ? `(${org})` : ""}`,
-        subtitle: `Date: ${date || "Flexible"} • Status: ${status?.toUpperCase() || "NEW"}`,
+        title: `${name}${org ? ` (${org})` : ""}`,
+        subtitle: `${date || "Date flexible"} — ${statusLabel[status] || "New"}`,
       };
     },
   },

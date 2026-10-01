@@ -6,8 +6,8 @@ import { SkipToContent } from "@/components/ui/SkipToContent";
 import { getSiteSettings } from "@/lib/sanity/queries";
 
 export const viewport: Viewport = {
-  themeColor: "#09090b",
-  colorScheme: "dark",
+  themeColor: "#FAF9F6",
+  colorScheme: "light",
   width: "device-width",
   initialScale: 1,
 };
@@ -68,8 +68,19 @@ export default async function RootLayout({
   const settings = await getSiteSettings();
 
   return (
-    <html lang="en" className="dark">
-      <body className="min-h-screen flex flex-col bg-grains-black text-grains-paper selection:bg-grains-red selection:text-white font-sans antialiased">
+    <html lang="en" className="light" suppressHydrationWarning>
+      <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Urbanist:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,400;1,500;1,600;1,700&display=swap"
+          rel="stylesheet"
+        />
+      </head>
+      <body
+        suppressHydrationWarning
+        className="min-h-screen flex flex-col bg-grains-white text-grains-text selection:bg-grains-red selection:text-white font-sans antialiased"
+      >
         <SkipToContent />
         <div className="grain-overlay" aria-hidden="true" />
         <Header settings={settings} />
