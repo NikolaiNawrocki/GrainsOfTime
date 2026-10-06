@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { getTimelineEntries } from "@/lib/sanity/queries";
+import { getTimelineEntries, getSiteSettings } from "@/lib/sanity/queries";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { EditorialImage } from "@/components/ui/EditorialImage";
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
@@ -14,7 +14,19 @@ export const metadata: Metadata = {
 export const revalidate = 60;
 
 export default async function HistoryPage() {
-  const timeline = await getTimelineEntries();
+  const [timeline, settings] = await Promise.all([
+    getTimelineEntries(),
+    getSiteSettings(),
+  ]);
+
+  const eyebrow = settings?.timelineEyebrow || "Chronicle • 1968 to Present";
+  const title = settings?.timelineHeading || "The Living Archive";
+  const subtitle =
+    settings?.timelineSubtitle ||
+    "A chronological record of sound, milestones, and brotherhood at North Carolina State University.";
+  const notice =
+    settings?.timelineArchivalNotice ||
+    "This timeline documents verified organizational milestones. Dates, narratives, and archival imagery are curated directly from NC State university archives and Grains of Time alumni records.";
 
   return (
     <div className="py-16 sm:py-24 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 bg-grains-white">
@@ -22,9 +34,9 @@ export default async function HistoryPage() {
       <ScrollReveal direction="up" distance={16} duration={600}>
         <div className="mb-16">
           <SectionHeading
-            eyebrow="Chronicle • 1968 to Present"
-            title="The Living Archive"
-            subtitle="A chronological record of sound, milestones, and brotherhood at North Carolina State University."
+            eyebrow={eyebrow}
+            title={title}
+            subtitle={subtitle}
           />
         </div>
       </ScrollReveal>
@@ -38,7 +50,7 @@ export default async function HistoryPage() {
               Archival Standard & Integrity
             </span>
             <p className="mt-1 font-sans text-grains-text/80 leading-normal">
-              This timeline documents verified organizational milestones. Dates, narratives, and archival imagery are curated directly from NC State university archives and Grains of Time alumni records.
+              {notice}
             </p>
           </div>
         </div>

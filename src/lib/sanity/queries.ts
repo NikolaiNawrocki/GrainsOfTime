@@ -40,7 +40,7 @@ export const eventsQuery = groq`
 `;
 
 export const archivedEventsQuery = groq`
-  *[_type == "event" && status == "archived"] | order(startDate desc)
+  *[_type == "event" && status == "archived" && isPlaceholder != true] | order(startDate desc)
 `;
 
 export const timelineQuery = groq`
@@ -115,8 +115,10 @@ export async function getArchivedEvents(): Promise<EventItem[]> {
     query: archivedEventsQuery,
     tags: ["event"],
   });
-  if (data && data.length > 0) return data;
-  return fallbackEvents.filter((e) => e.status === "archived");
+  if (data && data.length > 0) {
+    return data.filter((e) => !e.isPlaceholder);
+  }
+  return fallbackEvents.filter((e) => e.status === "archived" && !e.isPlaceholder);
 }
 
 export async function getTimelineEntries(): Promise<TimelineEntry[]> {

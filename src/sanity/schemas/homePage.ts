@@ -11,6 +11,7 @@ export const homePage = defineType({
     { name: 'introduction', title: 'Introduction' },
     { name: 'quickLinks', title: 'Quick Links' },
     { name: 'featured', title: 'Featured Content' },
+    { name: 'archival', title: 'Archival & Timeline Feature' },
   ],
   fields: [
     // Hero Section group
@@ -182,6 +183,95 @@ export const homePage = defineType({
       title: 'Secondary Button Link',
       group: 'featured',
       initialValue: '/about',
+    }),
+
+    // Archival Feature group
+    defineField({
+      name: 'archivalEyebrow',
+      type: 'string',
+      title: 'Small Label Above Section',
+      group: 'archival',
+      initialValue: 'The Archive',
+    }),
+    defineField({
+      name: 'archivalHeading',
+      type: 'string',
+      title: 'Section Heading',
+      group: 'archival',
+      initialValue: '1968: Where the Harmony Began',
+    }),
+    defineField({
+      name: 'archivalSubtitle',
+      type: 'text',
+      rows: 2,
+      title: 'Section Subtitle',
+      group: 'archival',
+      initialValue: 'More than half a century ago, a handful of NC State students gathered to sing without instruments. Today, that foundation remains unbroken.',
+    }),
+    defineField({
+      name: 'archivalNarrative',
+      type: 'text',
+      rows: 5,
+      title: 'Section Narrative',
+      group: 'archival',
+      description: 'Paragraphs can be separated by a blank line.',
+      initialValue: 'From barbershop and collegiate choral classics in the late 1960s to contemporary pop, rock, and student-arranged soul charts today, Grains of Time reflects the spirit of North Carolina State University.\n\nEvery decade has contributed unique voices, legendary arrangements, and enduring friendships that span generations of alumni.',
+    }),
+    defineField({
+      name: 'archivalImage',
+      type: 'image',
+      title: 'Archival Photograph',
+      group: 'archival',
+      options: { hotspot: true },
+      fields: [
+        defineField({
+          name: 'alt',
+          type: 'string',
+          title: 'Image Description',
+          initialValue: 'Grains of Time brothers in unity under concert spotlights',
+        }),
+        defineField({
+          name: 'credit',
+          type: 'string',
+          title: 'Photo Credit',
+          initialValue: 'Grains of Time Archive',
+        }),
+      ],
+    }),
+    defineField({
+      name: 'archivalStatFounded',
+      type: 'number',
+      title: 'Stat: Founded Year',
+      group: 'archival',
+      initialValue: 1968,
+    }),
+    defineField({
+      name: 'archivalStatDecades',
+      type: 'string',
+      title: 'Stat: Decades Label',
+      group: 'archival',
+      initialValue: '5+',
+    }),
+    defineField({
+      name: 'archivalStatRecordings',
+      type: 'string',
+      title: 'Stat: Recorded Tracks Label',
+      group: 'archival',
+      initialValue: '50+',
+    }),
+    defineField({
+      name: 'archivalCtaText',
+      type: 'string',
+      title: 'Button Text',
+      group: 'archival',
+      initialValue: 'Explore Timeline (1968–Present)',
+    }),
+    defineField({
+      name: 'archivalCtaLink',
+      type: 'string',
+      title: 'Button Link',
+      group: 'archival',
+      initialValue: '/history',
     }),
   ],
 });

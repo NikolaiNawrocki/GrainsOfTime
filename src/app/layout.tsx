@@ -79,7 +79,7 @@ export default async function RootLayout({
       </head>
       <body
         suppressHydrationWarning
-        className="min-h-screen flex flex-col bg-grains-white text-grains-text selection:bg-grains-red selection:text-white font-sans antialiased"
+        className="min-h-screen flex flex-col bg-grains-white text-grains-text selection:bg-grains-red selection:text-white font-sans antialiased overflow-x-hidden max-w-full"
       >
         <SkipToContent />
         <div className="grain-overlay" aria-hidden="true" />

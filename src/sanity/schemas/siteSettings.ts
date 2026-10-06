@@ -11,6 +11,8 @@ export const siteSettings = defineType({
     { name: 'announcement', title: 'Announcement Banner' },
     { name: 'contact', title: 'Contact Information' },
     { name: 'social', title: 'Social Media Links' },
+    { name: 'booking', title: 'Booking Page & FAQs' },
+    { name: 'pageHeaders', title: 'Page Banners & Headers' },
     { name: 'sharing', title: 'Sharing & Search' },
   ],
   fields: [
@@ -133,6 +135,13 @@ export const siteSettings = defineType({
           description: 'Your YouTube channel URL. Leave empty if you don\'t have one yet.',
         }),
         defineField({
+          name: 'facebook',
+          title: 'Facebook',
+          type: 'url',
+          description: 'Your Facebook profile/page URL. Leave empty if you don\'t have one yet.',
+          initialValue: 'https://www.facebook.com/grainsoftime/',
+        }),
+        defineField({
           name: 'gofundme',
           title: 'Fundraising / Support Page',
           type: 'url',
@@ -164,6 +173,150 @@ export const siteSettings = defineType({
           validation: (Rule) => Rule.required(),
         }),
       ],
+    }),
+    // Booking Page Configuration
+    defineField({
+      name: 'bookingHeading',
+      title: 'Booking Page Heading',
+      type: 'string',
+      group: 'booking',
+      initialValue: 'Bring the Sound to Your Event',
+    }),
+    defineField({
+      name: 'bookingSubtitle',
+      title: 'Booking Page Subtitle',
+      type: 'text',
+      rows: 2,
+      group: 'booking',
+      initialValue: 'From NC State university convocations to private celebrations and masterclasses, Grains of Time brings unforgettable vocal energy to every stage.',
+    }),
+    defineField({
+      name: 'bookingGuidelines',
+      title: 'Technical Guidelines & Requirements',
+      type: 'array',
+      group: 'booking',
+      of: [
+        {
+          type: 'object',
+          fields: [
+            defineField({
+              name: 'title',
+              title: 'Guideline Title',
+              type: 'string',
+              validation: (Rule) => Rule.required(),
+            }),
+            defineField({
+              name: 'description',
+              title: 'Description',
+              type: 'text',
+              rows: 3,
+              validation: (Rule) => Rule.required(),
+            }),
+          ],
+        },
+      ],
+    }),
+    defineField({
+      name: 'bookingFaqs',
+      title: 'Frequently Asked Questions',
+      type: 'array',
+      group: 'booking',
+      of: [
+        {
+          type: 'object',
+          fields: [
+            defineField({
+              name: 'q',
+              title: 'Question',
+              type: 'string',
+              validation: (Rule) => Rule.required(),
+            }),
+            defineField({
+              name: 'a',
+              title: 'Answer',
+              type: 'text',
+              rows: 3,
+              validation: (Rule) => Rule.required(),
+            }),
+          ],
+        },
+      ],
+    }),
+
+    // Page Banners & Headers
+    defineField({
+      name: 'rosterEyebrow',
+      title: 'Roster Page Eyebrow',
+      type: 'string',
+      group: 'pageHeaders',
+      initialValue: 'The Voices',
+    }),
+    defineField({
+      name: 'rosterHeading',
+      title: 'Roster Page Heading',
+      type: 'string',
+      group: 'pageHeaders',
+      initialValue: 'Current Ensemble',
+    }),
+    defineField({
+      name: 'rosterSubtitle',
+      title: 'Roster Page Subtitle',
+      type: 'text',
+      rows: 2,
+      group: 'pageHeaders',
+      initialValue: 'Nine to fifteen undergraduate voices spanning five distinct vocal sections, performing without instrumental accompaniment.',
+    }),
+    defineField({
+      name: 'rosterHeroImage',
+      title: 'Ensemble Banner Photograph',
+      type: 'image',
+      group: 'pageHeaders',
+      options: { hotspot: true },
+      description: 'The wide ensemble banner at the top of the Members page.',
+      fields: [
+        defineField({
+          name: 'alt',
+          title: 'Image Description',
+          type: 'string',
+          initialValue: 'Grains of Time active ensemble at the NC State Memorial Belltower',
+        }),
+        defineField({
+          name: 'credit',
+          title: 'Photo Credit',
+          type: 'string',
+          initialValue: 'Grains of Time Media Day',
+        }),
+      ],
+    }),
+    defineField({
+      name: 'timelineEyebrow',
+      title: 'Timeline Page Eyebrow',
+      type: 'string',
+      group: 'pageHeaders',
+      initialValue: 'Chronicle • 1968 to Present',
+    }),
+    defineField({
+      name: 'timelineHeading',
+      title: 'Timeline Page Heading',
+      type: 'string',
+      group: 'pageHeaders',
+      initialValue: 'The Living Archive',
+    }),
+    defineField({
+      name: 'timelineSubtitle',
+      title: 'Timeline Page Subtitle',
+      type: 'text',
+      rows: 2,
+      group: 'pageHeaders',
+      initialValue: 'A chronological record of sound, milestones, and brotherhood at North Carolina State University.',
+    }),
+    defineField({
+      name: 'timelineArchivalNotice',
+      title: 'Timeline Archival Policy Notice',
+      type: 'text',
+      rows: 3,
+      group: 'pageHeaders',
+      initialValue: 'This timeline documents verified organizational milestones. Dates, narratives, and archival imagery are curated directly from NC State university archives and Grains of Time alumni records.',
     }),
   ],
 });

@@ -23,15 +23,52 @@ export const fallbackSiteSettings: SiteSettings = {
   contactEmail: "ncstategrains@gmail.com",
   bookingEmail: "ncstategrains@gmail.com",
   socialLinks: {
-    instagram: "https://instagram.com/grainsoftime",
-    // Official links left blank until supplied by organization:
+    instagram: "https://www.instagram.com/grainsoftime/?hl=en",
     spotify: "https://open.spotify.com/artist/4oHl4fefbY77maGXUyGZeW?si=mVbG3OowSiGR2XN1FCG6jg",
-    youtube: "",
+    youtube: "https://www.youtube.com/user/GrainsofTime",
+    facebook: "https://www.facebook.com/grainsoftime/",
     gofundme: "https://www.gofundme.com/f/grainsoftime",
     merch: "https://ladiesinredncsu.myshopify.com/collections/all",
   },
   locationAffiliation: "North Carolina State University • Raleigh, North Carolina",
   foundedYear: 1968,
+  bookingHeading: "Bring the Sound to Your Event",
+  bookingSubtitle: "From NC State university convocations to private celebrations and masterclasses, Grains of Time brings unforgettable vocal energy to every stage.",
+  bookingGuidelines: [
+    {
+      title: "Acoustics & Sound",
+      description: "For small intimate rooms (under 75 guests), we can perform completely unamplified. For auditoriums, gymnasiums, or outdoor events, sound reinforcement (at least 3–5 wireless vocal mics or an area choir array) is strongly recommended.",
+    },
+    {
+      title: "Microphone Setup",
+      description: "For full collegiate-level amplified sets, our ideal configuration is 8–12 handheld wireless microphones and 1 dedicated bass/beatbox microphone with dedicated stage monitors.",
+    },
+    {
+      title: "Advance Notice",
+      description: "Because all members are full-time undergraduate students at NC State, we kindly request inquiries at least 3–4 weeks prior to your target event date, especially around midterms and finals periods.",
+    },
+  ],
+  bookingFaqs: [
+    {
+      q: "What styles of music does Grains of Time perform?",
+      a: "Our setlist encompasses contemporary pop hits, classic rock staples, R&B grooves, traditional NC State anthems, and seasonal holiday favorites—all arranged specifically for our 5-part vocal ensemble.",
+    },
+    {
+      q: "How long is a typical performance?",
+      a: "We accommodate performances ranging from a single national anthem or alma mater opener (5–10 minutes) up to a full two-act concert showcase (45–75 minutes).",
+    },
+    {
+      q: "Does Grains of Time travel outside of the Triangle?",
+      a: "Yes! While our primary performance hub is Raleigh and the Research Triangle, we regularly travel across North Carolina and the East Coast for festivals, high school clinics, and special events.",
+    },
+  ],
+  rosterEyebrow: "The Voices",
+  rosterHeading: "Current Ensemble",
+  rosterSubtitle: "Nine to fifteen undergraduate voices spanning five distinct vocal sections, performing without instrumental accompaniment.",
+  timelineEyebrow: "Chronicle • 1968 to Present",
+  timelineHeading: "The Living Archive",
+  timelineSubtitle: "A chronological record of sound, milestones, and brotherhood at North Carolina State University.",
+  timelineArchivalNotice: "This timeline documents verified organizational milestones. Dates, narratives, and archival imagery are curated directly from NC State university archives and Grains of Time alumni records.",
 };
 
 // Current active ensemble roster
@@ -254,18 +291,6 @@ export const fallbackEvents: EventItem[] = [
     description: "Official performance schedule awaiting final administrative confirmation. Check back closer to the date or follow @grainsoftime on Instagram for announcements.",
     status: "published",
     featured: true,
-    isPlaceholder: true,
-  },
-  {
-    _id: "event-past-archive-1",
-    title: "[Archived Performance: Spring Finale]",
-    slug: "spring-finale-archive",
-    startDate: "2026-04-25T19:00:00-04:00",
-    venue: "Titmus Theatre, Thompson Hall",
-    city: "Raleigh, NC",
-    eventType: "concert",
-    summary: "Culmination concert celebrating graduating seniors and the active semester repertoire.",
-    status: "archived",
     isPlaceholder: true,
   },
 ];
@@ -967,37 +992,74 @@ export const fallbackHomePage: HomePageData = {
   primaryCtaLink: "/events",
   secondaryCtaText: "The Story Since 1968",
   secondaryCtaLink: "/about",
+  // Archival feature on homepage
+  archivalEyebrow: "The Archive",
+  archivalHeading: "1968: Where the Harmony Began",
+  archivalSubtitle: "More than half a century ago, a handful of NC State students gathered to sing without instruments. Today, that foundation remains unbroken.",
+  archivalNarrative: "From barbershop and collegiate choral classics in the late 1960s to contemporary pop, rock, and student-arranged soul charts today, Grains of Time reflects the spirit of North Carolina State University.\n\nEvery decade has contributed unique voices, legendary arrangements, and enduring friendships that span generations of alumni.",
+  archivalImage: {
+    imageUrl: "/GrainsPhotos/Pics/IMG_2224.jpg",
+    alt: "Grains of Time brothers in unity under concert spotlights",
+    credit: "Grains of Time Archive",
+  },
+  archivalStatFounded: 1968,
+  archivalStatDecades: "5+",
+  archivalStatRecordings: "50+",
+  archivalCtaText: "Explore Timeline (1968–Present)",
+  archivalCtaLink: "/history",
 };
 
 // Fallback About Page Content
 export const fallbackAboutPage: AboutPageData = {
-  heading: "Brotherhood in Harmony",
-  subtitle: "Founded in 1968 at North Carolina State University, Grains of Time is NC State's premier all-male collegiate a cappella ensemble.",
-  storyEyebrow: "Our Heritage",
+  heading: "The Living Sound of NC State",
+  subtitle: "Founded in 1968, Grains of Time is North Carolina State University's premier all-male a cappella ensemble—merging historic tradition with contemporary vocal innovation.",
+  storyEyebrow: "Heritage & Brotherhood",
   heroImage: {
     imageUrl: "/GrainsPhotos/MediaDay2026/IMG_4550.jpg",
-    alt: "Grains of Time brotherhood at NC State Memorial Belltower",
-    credit: "Grains of Time Media Day 2026",
+    alt: "Grains of Time current active ensemble at NC State Memorial Belltower",
+    credit: "Grains of Time Media",
+  },
+  profileBadge: "Ensemble Profile",
+  profileTitle: "Fifty-Eight Years of Contemporary Harmony",
+  profileDescription: "From traditional collegiate choral singing during the civil rights era to today's complex contemporary arrangements, Grains of Time embodies the creative spirit of North Carolina State.",
+  profileInstitution: "NC State University",
+  profileFounded: "1968 • Raleigh, NC",
+  profileGenre: "Contemporary A Cappella",
+  chapter1: {
+    chapterLabel: "Chapter 01",
+    title: "The Inception in 1968",
+    content: "In the late 1960s, a dedicated contingent of NC State vocalists sought to establish an all-male ensemble characterized by tight vocal blending, high energy, and authentic collegiate fellowship. What began as an intimate student collective soon grew into one of the most recognizable performing arts groups in Raleigh.\n\nThe name Grains of Time symbolizes the accumulation of individual voices across the sands of time—each passing class contributing its unique timbre before handing the tuning fork to the next generation.",
   },
   pullQuote: {
-    quote: "A half-century of music, camaraderie, and an uncompromising dedication to vocal sound without accompaniment.",
-    attribution: "Grains of Time Alumni Association",
+    quote: "In a cappella, there is nowhere to hide. Every breath, pitch bend, and rhythmic subdivision rests on the person standing next to you.",
+    attribution: "— Grains of Time Rehearsal Tradition",
   },
-  missionHeading: "Our Pillars",
+  chapter2: {
+    chapterLabel: "Chapter 02",
+    title: "The Rehearsal Room & Craft",
+    content: "Twice a week inside the practice rooms of Price Music Center on NC State’s campus, the ensemble gathers to workshop new charts. Baritones lock into bass overtones; tenors navigate delicate falsetto leads; vocal percussionists develop acoustic kick drums and crisp snare taps using precision microphone technique.\n\nThe repertoire spans contemporary chart-toppers, classic rock staples, R&B grooves, and perennial NC State fight songs. Every arrangement is written by members or alumni, tailored to the group's exact vocal contours.",
+  },
+  missionHeading: "Core Tenets",
   missionText: "From intimate campus serenades to major concert hall showcases, we strive to bring world-class vocal music and brotherly camaraderie to the Wolfpack community and beyond.",
   valuesItems: [
     {
-      title: "Acoustic Discipline",
-      description: "Every bassline, harmony, and beat is produced purely with the human voice — arranging complex music with zero instruments.",
+      title: "Vocal Discipline",
+      description: "Every arrangement is performed entirely without accompaniment. From punchy beatbox grooves to resonant bass pedals, every frequency is produced live by the human voice.",
     },
     {
-      title: "Lifelong Brotherhood",
-      description: "Joining Grains is a lifelong fraternity spanning generations of NC State engineers, artists, scientists, and scholars.",
+      title: "An Enduring Brotherhood",
+      description: "Beyond musical performance, Grains of Time is a brotherhood spanning over five decades. Generations of alumni return to Raleigh annually to sing alongside current undergraduates.",
     },
     {
-      title: "Student Leadership",
-      description: "Entirely arranged, directed, and managed by undergraduate and graduate students at NC State.",
+      title: "Student-Led Craft",
+      description: "Arrangements, choreography, staging, travel logistics, and rehearsals are managed entirely by active student officers and ensemble directors.",
     },
   ],
+  ctaHeading: "Want to see Grains of Time live?",
+  ctaDescription: "Check our upcoming semester showcase schedule or inquire about booking us for your event.",
+  ctaPrimaryText: "Upcoming Shows",
+  ctaPrimaryLink: "/events",
+  ctaSecondaryText: "Book Us",
+  ctaSecondaryLink: "/book",
 };
 

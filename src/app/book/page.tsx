@@ -2,7 +2,10 @@ import type { Metadata } from "next";
 import { BookingForm } from "@/components/forms/BookingForm";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
-import { Mic, Volume2, Clock, HelpCircle } from "lucide-react";
+import { Mic, Volume2, Clock, HelpCircle, LucideIcon } from "lucide-react";
+import { getSiteSettings } from "@/lib/sanity/queries";
+
+export const revalidate = 60;
 
 export const metadata: Metadata = {
   title: "Book the Ensemble | Inquiries",
@@ -10,29 +13,46 @@ export const metadata: Metadata = {
     "Hire Grains of Time for your university event, corporate reception, private celebration, or high school vocal masterclass.",
 };
 
-export default function BookPage() {
-  const technicalGuidelines = [
+export default async function BookPage() {
+  const settings = await getSiteSettings();
+
+  const heading = settings?.bookingHeading || "Bring the Sound to Your Event";
+  const subtitle =
+    settings?.bookingSubtitle ||
+    "From NC State university convocations to private celebrations and masterclasses, Grains of Time brings unforgettable vocal energy to every stage.";
+
+  const guidelineIcons: LucideIcon[] = [Volume2, Mic, Clock];
+
+  const defaultGuidelines = [
     {
-      icon: Volume2,
       title: "Acoustics & Sound",
       description:
         "For small intimate rooms (under 75 guests), we can perform completely unamplified. For auditoriums, gymnasiums, or outdoor events, sound reinforcement (at least 3–5 wireless vocal mics or an area choir array) is strongly recommended.",
     },
     {
-      icon: Mic,
       title: "Microphone Setup",
       description:
         "For full collegiate-level amplified sets, our ideal configuration is 8–12 handheld wireless microphones and 1 dedicated bass/beatbox microphone with dedicated stage monitors.",
     },
     {
-      icon: Clock,
       title: "Advance Notice",
       description:
         "Because all members are full-time undergraduate students at NC State, we kindly request inquiries at least 3–4 weeks prior to your target event date, especially around midterms and finals periods.",
     },
   ];
 
-  const faqs = [
+  const rawGuidelines =
+    settings?.bookingGuidelines && settings.bookingGuidelines.length > 0
+      ? settings.bookingGuidelines
+      : defaultGuidelines;
+
+  const technicalGuidelines = rawGuidelines.map((item, idx) => ({
+    icon: guidelineIcons[idx % guidelineIcons.length],
+    title: item.title,
+    description: item.description,
+  }));
+
+  const defaultFaqs = [
     {
       q: "What styles of music does Grains of Time perform?",
       a: "Our setlist encompasses contemporary pop hits, classic rock staples, R&B grooves, traditional NC State anthems, and seasonal holiday favorites—all arranged specifically for our 5-part vocal ensemble.",
@@ -47,6 +67,11 @@ export default function BookPage() {
     },
   ];
 
+  const faqs =
+    settings?.bookingFaqs && settings.bookingFaqs.length > 0
+      ? settings.bookingFaqs
+      : defaultFaqs;
+
   return (
     <div className="py-16 sm:py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 bg-grains-white">
       {/* Header */}
@@ -54,8 +79,8 @@ export default function BookPage() {
         <div className="mb-14 max-w-3xl">
           <SectionHeading
             eyebrow="Commission & Hire"
-            title="Bring the Sound to Your Event"
-            subtitle="From NC State university convocations to private celebrations and masterclasses, Grains of Time brings unforgettable vocal energy to every stage."
+            title={heading}
+            subtitle={subtitle}
           />
         </div>
       </ScrollReveal>

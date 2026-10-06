@@ -49,12 +49,33 @@ export interface SiteSettings {
     instagram?: string;
     spotify?: string;
     youtube?: string;
+    facebook?: string;
     gofundme?: string;
     merch: string;
   };
   locationAffiliation: string;
   foundedYear: number;
   defaultOgImage?: SanityImage;
+  // Booking page configuration
+  bookingHeading?: string;
+  bookingSubtitle?: string;
+  bookingGuidelines?: {
+    title: string;
+    description: string;
+  }[];
+  bookingFaqs?: {
+    q: string;
+    a: string;
+  }[];
+  // Roster banner and page headers
+  rosterEyebrow?: string;
+  rosterHeading?: string;
+  rosterSubtitle?: string;
+  rosterHeroImage?: SanityImage;
+  timelineEyebrow?: string;
+  timelineHeading?: string;
+  timelineSubtitle?: string;
+  timelineArchivalNotice?: string;
 }
 
 export interface Member {
@@ -196,6 +217,17 @@ export interface HomePageData {
   primaryCtaLink?: string;
   secondaryCtaText?: string;
   secondaryCtaLink?: string;
+  // Archival feature section
+  archivalEyebrow?: string;
+  archivalHeading?: string;
+  archivalSubtitle?: string;
+  archivalNarrative?: string;
+  archivalImage?: SanityImage;
+  archivalStatFounded?: number;
+  archivalStatDecades?: string;
+  archivalStatRecordings?: string;
+  archivalCtaText?: string;
+  archivalCtaLink?: string;
 }
 
 export interface ValueItem {
@@ -203,19 +235,44 @@ export interface ValueItem {
   description: string;
 }
 
+export interface ChapterItem {
+  chapterLabel?: string;
+  title?: string;
+  content?: string;
+}
+
 export interface AboutPageData {
   _id?: string;
   heading?: string;
   subtitle?: string;
   heroImage?: SanityImage;
+  // Hero profile card
+  profileBadge?: string;
+  profileTitle?: string;
+  profileDescription?: string;
+  profileInstitution?: string;
+  profileFounded?: string;
+  profileGenre?: string;
+  // Story & Chapters
   storyEyebrow?: string;
-  storyBody?: any[]; // Block content
+  chapter1?: ChapterItem;
   pullQuote?: {
     quote?: string;
     attribution?: string;
   };
+  chapter2?: ChapterItem;
+  additionalChapters?: ChapterItem[];
+  storyBody?: any[]; // Block content
+  // Mission & Values
   missionHeading?: string;
   missionText?: string;
   valuesItems?: ValueItem[];
+  // Call to action
+  ctaHeading?: string;
+  ctaDescription?: string;
+  ctaPrimaryText?: string;
+  ctaPrimaryLink?: string;
+  ctaSecondaryText?: string;
+  ctaSecondaryLink?: string;
 }
 

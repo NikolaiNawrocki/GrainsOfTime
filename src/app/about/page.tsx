@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
 import { Mic2, Compass, Shield, LucideIcon } from "lucide-react";
+import { PortableText } from "next-sanity";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { EditorialImage } from "@/components/ui/EditorialImage";
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
@@ -24,11 +25,52 @@ export default async function AboutPage() {
     content?.subtitle ||
     "Founded in 1968, Grains of Time is North Carolina State University's premier all-male a cappella ensemble—merging historic tradition with contemporary vocal innovation.";
 
+  // Profile Card
+  const profileBadge = content?.profileBadge || "Ensemble Profile";
+  const profileTitle = content?.profileTitle || "Fifty-Eight Years of Contemporary Harmony";
+  const profileDescription =
+    content?.profileDescription ||
+    "From traditional collegiate choral singing during the civil rights era to today's complex contemporary arrangements, Grains of Time embodies the creative spirit of North Carolina State.";
+  const profileInstitution = content?.profileInstitution || "NC State University";
+  const profileFounded = content?.profileFounded || "1968 • Raleigh, NC";
+  const profileGenre = content?.profileGenre || "Contemporary A Cappella";
+
+  // Chapter 1
+  const ch1Label = content?.chapter1?.chapterLabel || "Chapter 01";
+  const ch1Title = content?.chapter1?.title || "The Inception in 1968";
+  const ch1Content =
+    content?.chapter1?.content ||
+    "In the late 1960s, a dedicated contingent of NC State vocalists sought to establish an all-male ensemble characterized by tight vocal blending, high energy, and authentic collegiate fellowship. What began as an intimate student collective soon grew into one of the most recognizable performing arts groups in Raleigh.\n\nThe name Grains of Time symbolizes the accumulation of individual voices across the sands of time—each passing class contributing its unique timbre before handing the tuning fork to the next generation.";
+
+  // Pull Quote
   const pullQuoteText =
     content?.pullQuote?.quote ||
     "In a cappella, there is nowhere to hide. Every breath, pitch bend, and rhythmic subdivision rests on the person standing next to you.";
   const pullQuoteCite =
     content?.pullQuote?.attribution || "— Grains of Time Rehearsal Tradition";
+
+  // Chapter 2
+  const ch2Label = content?.chapter2?.chapterLabel || "Chapter 02";
+  const ch2Title = content?.chapter2?.title || "The Rehearsal Room & Craft";
+  const ch2Content =
+    content?.chapter2?.content ||
+    "Twice a week inside the practice rooms of Price Music Center on NC State’s campus, the ensemble gathers to workshop new charts. Baritones lock into bass overtones; tenors navigate delicate falsetto leads; vocal percussionists develop acoustic kick drums and crisp snare taps using precision microphone technique.\n\nThe repertoire spans contemporary chart-toppers, classic rock staples, R&B grooves, and perennial NC State fight songs. Every arrangement is written by members or alumni, tailored to the group's exact vocal contours.";
+
+  // Call to action
+  const ctaHeading = content?.ctaHeading || "Want to see Grains of Time live?";
+  const ctaDescription =
+    content?.ctaDescription ||
+    "Check our upcoming semester showcase schedule or inquire about booking us for your event.";
+  const ctaPrimaryText = content?.ctaPrimaryText || "Upcoming Shows";
+  const ctaPrimaryLink = content?.ctaPrimaryLink || "/events";
+  const ctaSecondaryText = content?.ctaSecondaryText || "Book Us";
+  const ctaSecondaryLink = content?.ctaSecondaryLink || "/book";
+
+  const renderParagraphs = (text: string) => {
+    return text.split(/\n\s*\n/).map((para, idx) => (
+      <p key={idx}>{para.trim()}</p>
+    ));
+  };
 
   const defaultValues = [
     {
@@ -88,7 +130,7 @@ export default async function AboutPage() {
             <div className="lg:col-span-4 p-8 bg-grains-cream border border-grains-border rounded-sm space-y-4 shadow-subtle">
               <div className="flex items-center justify-between pb-2 border-b border-grains-border/70">
                 <span className="text-[11px] font-mono tracking-widest text-grains-red uppercase block font-semibold">
-                  Ensemble Profile
+                  {profileBadge}
                 </span>
                 <div className="w-8 h-8 rounded-full bg-grains-black p-1.5 flex items-center justify-center border border-grains-border shadow-sm">
                   <Image
@@ -101,15 +143,15 @@ export default async function AboutPage() {
                 </div>
               </div>
               <h3 className="text-xl font-serif text-grains-black">
-                Fifty-Eight Years of Contemporary Harmony
+                {profileTitle}
               </h3>
               <p className="text-sm text-grains-text/80 font-sans leading-relaxed">
-                From traditional collegiate choral singing during the civil rights era to today&apos;s complex contemporary arrangements, Grains of Time embodies the creative spirit of North Carolina State.
+                {profileDescription}
               </p>
               <div className="pt-4 border-t border-grains-border text-xs font-mono text-grains-muted space-y-1">
-                <p>INSTITUTION: NC State University</p>
-                <p>FOUNDED: 1968 • Raleigh, NC</p>
-                <p>GENRE: Contemporary A Cappella</p>
+                <p>INSTITUTION: {profileInstitution}</p>
+                <p>FOUNDED: {profileFounded}</p>
+                <p>GENRE: {profileGenre}</p>
               </div>
             </div>
           </div>
@@ -118,22 +160,17 @@ export default async function AboutPage() {
 
       {/* Editorial Narrative Sections */}
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-20">
-        {/* Chapter 1: The Founding */}
+        {/* Chapter 1 */}
         <ScrollReveal direction="up" distance={20} duration={650}>
           <section className="space-y-4">
             <span className="text-xs font-mono text-grains-red uppercase tracking-[0.2em] block font-semibold">
-              Chapter 01
+              {ch1Label}
             </span>
             <h2 className="text-3xl sm:text-4xl font-serif text-grains-black font-normal">
-              The Inception in 1968
+              {ch1Title}
             </h2>
             <div className="text-grains-text/85 font-sans leading-relaxed space-y-4 text-base">
-              <p>
-                In the late 1960s, a dedicated contingent of NC State vocalists sought to establish an all-male ensemble characterized by tight vocal blending, high energy, and authentic collegiate fellowship. What began as an intimate student collective soon grew into one of the most recognizable performing arts groups in Raleigh.
-              </p>
-              <p>
-                The name <em>Grains of Time</em> symbolizes the accumulation of individual voices across the sands of time—each passing class contributing its unique timbre before handing the tuning fork to the next generation.
-              </p>
+              {renderParagraphs(ch1Content)}
             </div>
           </section>
         </ScrollReveal>
@@ -150,25 +187,54 @@ export default async function AboutPage() {
           </blockquote>
         </ScrollReveal>
 
-        {/* Chapter 2: The Sound & Brotherhood */}
+        {/* Chapter 2 */}
         <ScrollReveal direction="up" distance={20} duration={650}>
           <section className="space-y-4">
             <span className="text-xs font-mono text-grains-red uppercase tracking-[0.2em] block font-semibold">
-              Chapter 02
+              {ch2Label}
             </span>
             <h2 className="text-3xl sm:text-4xl font-serif text-grains-black font-normal">
-              The Rehearsal Room & Craft
+              {ch2Title}
             </h2>
             <div className="text-grains-text/85 font-sans leading-relaxed space-y-4 text-base">
-              <p>
-                Twice a week inside the practice rooms of Price Music Center on NC State’s campus, the ensemble gathers to workshop new charts. Baritones lock into bass overtones; tenors navigate delicate falsetto leads; vocal percussionists develop acoustic kick drums and crisp snare taps using precision microphone technique.
-              </p>
-              <p>
-                The repertoire spans contemporary chart-toppers, classic rock staples, R&B grooves, and perennial NC State fight songs. Every arrangement is written by members or alumni, tailored to the group&apos;s exact vocal contours.
-              </p>
+              {renderParagraphs(ch2Content)}
             </div>
           </section>
         </ScrollReveal>
+
+        {/* Additional Chapters (if configured in Studio) */}
+        {content?.additionalChapters && content.additionalChapters.length > 0 && (
+          <div className="space-y-20">
+            {content.additionalChapters.map((ch, idx) => (
+              <ScrollReveal key={idx} direction="up" distance={20} duration={650}>
+                <section className="space-y-4">
+                  {ch.chapterLabel && (
+                    <span className="text-xs font-mono text-grains-red uppercase tracking-[0.2em] block font-semibold">
+                      {ch.chapterLabel}
+                    </span>
+                  )}
+                  <h2 className="text-3xl sm:text-4xl font-serif text-grains-black font-normal">
+                    {ch.title}
+                  </h2>
+                  {ch.content && (
+                    <div className="text-grains-text/85 font-sans leading-relaxed space-y-4 text-base">
+                      {renderParagraphs(ch.content)}
+                    </div>
+                  )}
+                </section>
+              </ScrollReveal>
+            ))}
+          </div>
+        )}
+
+        {/* Supplemental Rich Text Story (if provided) */}
+        {content?.storyBody && content.storyBody.length > 0 && (
+          <ScrollReveal direction="up" distance={20} duration={650}>
+            <div className="prose prose-zinc max-w-none text-grains-text/85 font-sans leading-relaxed">
+              <PortableText value={content.storyBody} />
+            </div>
+          </ScrollReveal>
+        )}
 
         {/* Values / Pillars */}
         <section className="pt-8">
@@ -215,24 +281,24 @@ export default async function AboutPage() {
           <div className="mt-16 p-8 sm:p-10 bg-grains-black text-white rounded-sm flex flex-col sm:flex-row items-center justify-between gap-6 shadow-editorial">
             <div className="space-y-1 text-center sm:text-left">
               <h4 className="text-xl font-serif text-white">
-                Want to see Grains of Time live?
+                {ctaHeading}
               </h4>
               <p className="text-sm text-slate-300 font-sans">
-                Check our upcoming semester showcase schedule or inquire about booking us for your event.
+                {ctaDescription}
               </p>
             </div>
             <div className="flex items-center gap-3">
               <Link
-                href="/events"
+                href={ctaPrimaryLink}
                 className="px-5 py-3 bg-grains-red hover:bg-grains-red-bright text-white text-xs font-mono tracking-widest uppercase rounded-sm transition-colors whitespace-nowrap shadow-subtle font-medium"
               >
-                Upcoming Shows
+                {ctaPrimaryText}
               </Link>
               <Link
-                href="/book"
+                href={ctaSecondaryLink}
                 className="px-5 py-3 bg-white/10 hover:bg-white/20 border border-white/20 text-white text-xs font-mono tracking-widest uppercase rounded-sm transition-colors whitespace-nowrap"
               >
-                Book Us
+                {ctaSecondaryText}
               </Link>
             </div>
           </div>

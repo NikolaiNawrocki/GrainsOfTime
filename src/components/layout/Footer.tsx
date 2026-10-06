@@ -159,6 +159,19 @@ export function Footer({ settings }: FooterProps) {
                   </a>
                 </li>
               )}
+              {social?.facebook && (
+                <li>
+                  <a
+                    href={social.facebook}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="hover:text-white transition-colors inline-flex items-center gap-1 text-slate-300/80"
+                  >
+                    Facebook Page
+                    <ArrowUpRight className="w-3 h-3 text-slate-400" />
+                  </a>
+                </li>
+              )}
               {social?.gofundme && (
                 <li>
                   <a
