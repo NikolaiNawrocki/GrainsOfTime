@@ -114,12 +114,12 @@ npm start
 1. Push this repository to the official **Grains of Time** GitHub organization (e.g. `github.com/grainsoftime/website`).
 2. Log into the organization Vercel team account and import the repository.
 3. Configure the Environment Variables in the Vercel Project Settings:
-   - `NEXT_PUBLIC_SITE_URL`: `https://grainsoftime.com`
+   - `NEXT_PUBLIC_SITE_URL`: `https://grainsoftime.org`
    - `NEXT_PUBLIC_SANITY_PROJECT_ID`: Your Sanity project ID
    - `NEXT_PUBLIC_SANITY_DATASET`: `production`
    - `SANITY_API_READ_TOKEN`: Sanity token with viewer privileges (for Draft Mode)
    - `SANITY_REVALIDATE_SECRET`: Shared secret for publish webhooks
-   - `BOOKING_RECIPIENT_EMAIL`: Organization booking inbox (e.g. `booking@grainsoftime.com`)
+   - `BOOKING_RECIPIENT_EMAIL`: Organization booking inbox (e.g. `booking@grainsoftime.org`)
    - `RESEND_API_KEY`: (Optional) API key for transactional email delivery
 4. Deploy the project. Vercel automatically generates production and preview builds.
 
@@ -127,13 +127,13 @@ npm start
 
 ## Cloudflare DNS & Domain Connection
 
-1. In Cloudflare DNS for `grainsoftime.com`:
+1. In Cloudflare DNS for `grainsoftime.org`:
    - Add a CNAME record for `www` pointing to `cname.vercel-dns.com`.
    - Add an A record for `@` (apex) pointing to `76.76.21.21` (or Vercel's recommended anycast IP).
    - In Cloudflare SSL/TLS settings, set encryption mode to **Full (strict)**.
 2. In Vercel Project Settings → Domains:
-   - Add `grainsoftime.com` and `www.grainsoftime.com`.
-   - Set `grainsoftime.com` to redirect to `www.grainsoftime.com` (or vice versa according to organization preference).
+   - Add `grainsoftime.org` and `www.grainsoftime.org`.
+   - Set `grainsoftime.org` to redirect to `www.grainsoftime.org` (or vice versa according to organization preference).
 
 ---
 

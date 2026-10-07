@@ -38,8 +38,11 @@ export async function generateMetadata(): Promise<Metadata> {
     creator: "Grains of Time",
     publisher: "Grains of Time",
     metadataBase: new URL(
-      process.env.NEXT_PUBLIC_SITE_URL || "https://grainsoftime.com"
+      process.env.NEXT_PUBLIC_SITE_URL || "https://grainsoftime.org"
     ),
+    alternates: {
+      canonical: "/",
+    },
     openGraph: {
       type: "website",
       locale: "en_US",
@@ -66,6 +69,36 @@ export default async function RootLayout({
   children: React.ReactNode;
 }) {
   const settings = await getSiteSettings();
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://grainsoftime.org";
+
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "MusicGroup",
+    name: "Grains of Time",
+    alternateName: [
+      "NC State Grains of Time",
+      "The Grains of Time",
+      "Grains of Time A Cappella",
+    ],
+    url: siteUrl,
+    logo: `${siteUrl}/icon.png`,
+    foundingDate: "1968",
+    foundingLocation: {
+      "@type": "Place",
+      name: "Raleigh, North Carolina",
+    },
+    genre: ["A Cappella", "Collegiate A Cappella", "Vocal Music"],
+    sameAs: [
+      "https://performingartstech.dasa.ncsu.edu/a-cappella/grains-of-time/",
+      "https://www.youtube.com/@grainsoftime",
+      "https://www.instagram.com/grainsoftime/",
+      "https://www.facebook.com/grainsoftime/",
+      "https://www.tiktok.com/@grainsoftime",
+    ],
+    description:
+      settings?.description ||
+      "Official website and living archive of Grains of Time, NC State University's premier all-male a cappella ensemble, founded in 1968.",
+  };
 
   return (
     <html lang="en" className="light" suppressHydrationWarning>
@@ -75,6 +108,10 @@ export default async function RootLayout({
         <link
           href="https://fonts.googleapis.com/css2?family=Urbanist:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,400;1,500;1,600;1,700&display=swap"
           rel="stylesheet"
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
       </head>
       <body

@@ -12,7 +12,7 @@ This document ensures that all digital assets, hosting environments, and content
 | **GitHub** | Organization (`github.com/grainsoftime`) | Group Admin Account | [ ] Yes (2+ Admins) |
 | **Vercel** | Team Account (Hobby or Pro) | Group Admin Account | [ ] Yes |
 | **Sanity CMS** | Organization Account | Group Admin Account | [ ] Yes |
-| **Email Service (Resend)** | Standard Account | `booking@grainsoftime.com` | [ ] Yes |
+| **Email Service (Resend)** | Standard Account | `booking@grainsoftime.org` | [ ] Yes |
 | **Shopify Partner** | Ladies in Red Collaboration | Affiliated Store Admin | [ ] Linked |
 
 ---

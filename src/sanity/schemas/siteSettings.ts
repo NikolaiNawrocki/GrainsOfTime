@@ -104,7 +104,7 @@ export const siteSettings = defineType({
       type: 'string',
       group: 'contact',
       validation: (Rule) => Rule.email(),
-      initialValue: 'booking@grainsoftime.com',
+      initialValue: 'booking@grainsoftime.org',
       description: 'The email address where booking/performance requests are sent.',
     }),
     // Social Media

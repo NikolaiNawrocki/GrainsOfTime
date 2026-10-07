@@ -29,12 +29,12 @@ This guide is written specifically for members, social media managers, officers,
 ## 1. How to Log In
 
 1. Open your web browser (Chrome, Safari, Firefox, or Edge).
-2. Go to: **`https://grainsoftime.com/studio`**  
+2. Go to: **`https://grainsoftime.org/studio`**  
    *(If testing on a computer locally before launch, use `http://localhost:3000/studio`)*
 3. You will see a login prompt. Click **"Log in with Google"** or your authorized account.
 4. Once authenticated, you will be taken directly into your visual dashboard.
 
-> **Tip**: Bookmark `https://grainsoftime.com/studio` in your browser favorites so you can quickly get to it whenever you need to make an update!
+> **Tip**: Bookmark `https://grainsoftime.org/studio` in your browser favorites so you can quickly get to it whenever you need to make an update!
 
 ---
 
