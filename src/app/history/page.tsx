@@ -130,7 +130,7 @@ export default async function HistoryPage() {
             </p>
           </div>
           <a
-            href="mailto:grainsoftimencsu@gmail.com?subject=Grains%20Archival%20Submission"
+            href={`mailto:${settings?.contactEmail || "ncstategrains@gmail.com"}?subject=Grains%20Archival%20Submission`}
             className="px-6 py-3 bg-grains-red hover:bg-grains-red-bright text-white text-xs font-mono tracking-widest uppercase rounded-sm transition-colors whitespace-nowrap shadow-subtle font-medium"
           >
             Submit to Archive

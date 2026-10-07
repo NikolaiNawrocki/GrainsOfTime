@@ -25,6 +25,8 @@ export const fallbackSiteSettings: SiteSettings = {
   socialLinks: {
     instagram: "https://www.instagram.com/grainsoftime/?hl=en",
     spotify: "https://open.spotify.com/artist/4oHl4fefbY77maGXUyGZeW?si=mVbG3OowSiGR2XN1FCG6jg",
+    appleMusic: "https://music.apple.com/us/artist/grains-of-time/213326965",
+    tiktok: "https://www.tiktok.com/@grainsoftime?is_from_webapp=1&sender_device=pc",
     youtube: "https://www.youtube.com/user/GrainsofTime",
     facebook: "https://www.facebook.com/grainsoftime/",
     gofundme: "https://www.gofundme.com/f/grainsoftime",

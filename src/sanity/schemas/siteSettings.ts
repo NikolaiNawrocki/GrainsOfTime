@@ -95,7 +95,7 @@ export const siteSettings = defineType({
       type: 'string',
       group: 'contact',
       validation: (Rule) => Rule.email(),
-      initialValue: 'grainsoftimencsu@gmail.com',
+      initialValue: 'ncstategrains@gmail.com',
       description: 'The main email address shown on the website for general inquiries.',
     }),
     defineField({
@@ -127,6 +127,20 @@ export const siteSettings = defineType({
           title: 'Spotify',
           type: 'url',
           description: 'Your Spotify artist page URL. Leave empty if you don\'t have one yet.',
+        }),
+        defineField({
+          name: 'appleMusic',
+          title: 'Apple Music',
+          type: 'url',
+          description: 'Your Apple Music artist page URL.',
+          initialValue: 'https://music.apple.com/us/artist/grains-of-time/213326965',
+        }),
+        defineField({
+          name: 'tiktok',
+          title: 'TikTok',
+          type: 'url',
+          description: 'Your TikTok profile URL.',
+          initialValue: 'https://www.tiktok.com/@grainsoftime?is_from_webapp=1&sender_device=pc',
         }),
         defineField({
           name: 'youtube',

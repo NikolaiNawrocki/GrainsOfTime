@@ -146,6 +146,32 @@ export function Footer({ settings }: FooterProps) {
                   </a>
                 </li>
               )}
+              {social?.appleMusic && (
+                <li>
+                  <a
+                    href={social.appleMusic}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="hover:text-white transition-colors inline-flex items-center gap-1 text-slate-300/80"
+                  >
+                    Apple Music
+                    <ArrowUpRight className="w-3 h-3 text-slate-400" />
+                  </a>
+                </li>
+              )}
+              {social?.tiktok && (
+                <li>
+                  <a
+                    href={social.tiktok}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="hover:text-white transition-colors inline-flex items-center gap-1 text-slate-300/80"
+                  >
+                    TikTok @grainsoftime
+                    <ArrowUpRight className="w-3 h-3 text-slate-400" />
+                  </a>
+                </li>
+              )}
               {social?.youtube && (
                 <li>
                   <a

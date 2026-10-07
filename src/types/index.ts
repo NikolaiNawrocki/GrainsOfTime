@@ -48,6 +48,8 @@ export interface SiteSettings {
   socialLinks: {
     instagram?: string;
     spotify?: string;
+    appleMusic?: string;
+    tiktok?: string;
     youtube?: string;
     facebook?: string;
     gofundme?: string;
