@@ -15,10 +15,10 @@ export const fallbackSiteSettings: SiteSettings = {
   description:
     "Official website and living archive of Grains of Time, North Carolina State University's premier all-male a cappella ensemble, founded in 1968.",
   announcement: {
-    enabled: true,
-    text: "Auditions for the Fall season will be announced soon. Follow @grainsoftime for updates.",
-    linkUrl: "/events",
-    linkText: "View Schedule",
+    enabled: false,
+    text: "",
+    linkUrl: "",
+    linkText: "",
   },
   contactEmail: "ncstategrains@gmail.com",
   bookingEmail: "ncstategrains@gmail.com",

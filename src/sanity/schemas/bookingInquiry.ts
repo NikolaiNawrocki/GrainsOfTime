@@ -45,8 +45,8 @@ export const bookingInquiry = defineType({
       type: "string",
     }),
     defineField({
-      name: "budgetRange",
-      title: "Budget Range",
+      name: "gigDuration",
+      title: "Gig Duration",
       type: "string",
     }),
     defineField({

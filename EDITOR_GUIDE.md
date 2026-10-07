@@ -216,7 +216,7 @@ When clients or organizations fill out the **/book** form on the public website:
 1. In the left menu, click **Booking Requests** → **New / Unread Requests**.
 2. Click any inquiry to see:
    - Client name, email, phone number, and organization.
-   - Requested date, venue location, budget, and performance details.
+   - Requested date, venue location, gig duration, and performance details.
 3. After you email or call the client, change the **Status Workflow** from **● New / Unread** to **◐ In Communication** or **✓ Confirmed Booking**.
 4. Click **Publish** to save your status update.
 

@@ -231,24 +231,23 @@ export function BookingForm() {
 
         <div className="space-y-1.5">
           <label
-            htmlFor="budgetRange"
+            htmlFor="gigDuration"
             className="text-xs font-mono uppercase tracking-widest text-grains-black block font-semibold"
           >
-            Budget Range (Optional)
+            Gig Duration (Optional)
           </label>
           <select
-            id="budgetRange"
-            name="budgetRange"
-            defaultValue="Flexible"
+            id="gigDuration"
+            name="gigDuration"
+            defaultValue="Flexible / To Be Discussed"
             className="w-full bg-white border border-grains-border rounded-sm px-4 py-2.5 text-sm text-grains-text focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-grains-red"
           >
-            <option value="Student / Non-Profit Rate">Student / Non-Profit Organization</option>
-            <option value="$100 - $300">$100 – $300</option>
-            <option value="$300 - $500">$300 – $500</option>
-            <option value="$500 - $1,000">$500 – $1,000</option>
-            <option value="$1,000 - $2,500">$1,000 – $2,500</option>
-            <option value="$2,500+">$2,500+</option>
-            <option value="Flexible">Flexible / To Be Discussed</option>
+            <option value="Under 15 minutes">Under 15 minutes (Anthem / Opener)</option>
+            <option value="15 - 30 minutes">15 – 30 minutes</option>
+            <option value="30 - 45 minutes">30 – 45 minutes</option>
+            <option value="45 - 60 minutes">45 – 60 minutes</option>
+            <option value="60+ minutes">60+ minutes (Full Concert / Feature)</option>
+            <option value="Flexible / To Be Discussed">Flexible / To Be Discussed</option>
           </select>
         </div>
       </div>

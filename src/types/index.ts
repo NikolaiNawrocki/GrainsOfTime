@@ -189,6 +189,7 @@ export interface BookingSubmission {
   eventDate: string;
   venue: string;
   eventType: string;
+  gigDuration?: string;
   budgetRange?: string;
   message: string;
   consent: boolean;

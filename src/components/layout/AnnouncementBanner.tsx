@@ -11,7 +11,12 @@ interface AnnouncementBannerProps {
 }
 
 export function AnnouncementBanner({ announcement }: AnnouncementBannerProps) {
-  if (!announcement || !announcement.enabled || !announcement.text) {
+  if (
+    !announcement ||
+    !announcement.enabled ||
+    !announcement.text ||
+    announcement.text.includes("Auditions for the Fall season will be announced soon")
+  ) {
     return null;
   }
 

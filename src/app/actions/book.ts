@@ -11,7 +11,7 @@ const bookingSchema = z.object({
   eventDate: z.string().min(1, "Please provide an estimated event date."),
   venue: z.string().min(2, "Please specify a venue or city/state."),
   eventType: z.string().min(1, "Please select an event category."),
-  budgetRange: z.string().optional(),
+  gigDuration: z.string().optional(),
   message: z.string().min(10, "Please provide details regarding your performance request (at least 10 characters)."),
   consent: z.literal(true, {
     errorMap: () => ({ message: "You must acknowledge the booking policy." }),
@@ -37,7 +37,7 @@ export async function submitBookingInquiry(
     eventDate: formData.get("eventDate"),
     venue: formData.get("venue"),
     eventType: formData.get("eventType"),
-    budgetRange: formData.get("budgetRange") || undefined,
+    gigDuration: (formData.get("gigDuration") as string) || (formData.get("budgetRange") as string) || undefined,
     message: formData.get("message"),
     consent: formData.get("consent") === "on",
     honeypot: (formData.get("website_hp") as string) || "",
@@ -84,7 +84,7 @@ Phone: ${data.phone || "N/A"}
 Date: ${data.eventDate}
 Venue: ${data.venue}
 Event Type: ${data.eventType}
-Budget: ${data.budgetRange || "Flexible"}
+Gig Duration: ${data.gigDuration || "Flexible / To Be Discussed"}
 
 Message:
 ${data.message}
