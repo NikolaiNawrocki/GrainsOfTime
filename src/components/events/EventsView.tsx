@@ -151,14 +151,16 @@ export function EventsView({
                     <span className="px-5 py-2.5 bg-red-50 border border-red-300 text-red-800 text-xs font-mono tracking-widest uppercase rounded-sm font-medium">
                       Performance Cancelled
                     </span>
-                  ) : event.ticketUrl ? (
+                  ) : (event.ticketUrl || event.ticketLink) ? (
                     <a
-                      href={event.ticketUrl}
+                      href={event.ticketUrl || event.ticketLink}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="inline-flex items-center px-6 py-3 bg-grains-red hover:bg-grains-red-bright text-white text-xs font-mono tracking-widest uppercase rounded-sm transition-colors shadow-subtle whitespace-nowrap font-medium"
                     >
-                      <span>{event.isFree ? "Free RSVP" : "Tickets"}</span>
+                      <span>
+                        {event.ticketButtonText || (event.isFree ? "Free RSVP" : "Tickets")}
+                      </span>
                       <ArrowUpRight className="w-4 h-4 ml-1.5" />
                     </a>
                   ) : (

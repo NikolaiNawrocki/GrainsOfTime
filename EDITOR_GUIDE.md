@@ -136,9 +136,9 @@ When a member graduates:
    - **Feature on Homepage**: Turn this switch ON if this is the next major upcoming show you want highlighted on the home page.
    - **Start Date & Time**: Pick the exact date and curtain time.
    - **Venue Name & Address**: e.g., *Stewart Theatre, Talley Student Union*.
-   - **Short Description**: 1–2 sentences for social cards and previews.
-   - **Ticket / RSVP Link**: Paste the ticket sales link (e.g., Ticketmaster, university box office).
-   - **Free Admission**: Toggle ON if there are no tickets required.
+   - **Ticket / RSVP Link**: Paste the ticket sales link (e.g., https://tickets.ncsu.edu, Eventbrite). This is located right on the main **Event Info** tab as well as the **Tickets & Admission** tab.
+   - **Ticket Button Label (Optional)**: Customize the button text (e.g., *Reserve Tickets*, *Get Tickets*, or *RSVP*). Defaults to *Tickets* or *Free RSVP*.
+   - **Free Admission**: Toggle ON if there are no tickets required (the button will say *Free RSVP* if a ticket link is provided).
    - **Event Poster**: Upload the promotional flyer or graphics.
 4. Click **Publish**.
 

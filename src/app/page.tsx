@@ -23,7 +23,12 @@ export default async function HomePage() {
     <div className="flex flex-col w-full">
       <HeroSection settings={settings} content={homeContent} />
       <EditorialStatement content={homeContent} />
-      {showEvents && <FeaturedEventCard events={upcomingEvents} />}
+      {showEvents && (
+        <FeaturedEventCard
+          events={upcomingEvents}
+          ticketUrlOverride={homeContent?.featuredEventTicketUrl}
+        />
+      )}
       <ArchivalFeature content={homeContent} />
     </div>
   );

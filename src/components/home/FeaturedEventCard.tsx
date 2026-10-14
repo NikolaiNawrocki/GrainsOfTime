@@ -9,15 +9,21 @@ import { VisualAcousticPulse } from "@/components/ui/VisualAcousticPulse";
 
 interface FeaturedEventCardProps {
   events: EventItem[];
+  ticketUrlOverride?: string;
 }
 
-export function FeaturedEventCard({ events }: FeaturedEventCardProps) {
+export function FeaturedEventCard({ events, ticketUrlOverride }: FeaturedEventCardProps) {
   // Find featured or first upcoming event
   const featuredEvent = events.find((e) => e.featured) || events[0];
 
   if (!featuredEvent) {
     return null;
   }
+
+  const ticketUrl = ticketUrlOverride || featuredEvent.ticketUrl || featuredEvent.ticketLink;
+  const buttonText =
+    featuredEvent.ticketButtonText ||
+    (featuredEvent.isFree ? "Free RSVP" : "Reserve Tickets");
 
   return (
     <section className="py-20 sm:py-28 border-b border-grains-border bg-grains-black text-white relative overflow-hidden">
@@ -85,14 +91,14 @@ export function FeaturedEventCard({ events }: FeaturedEventCardProps) {
 
               {/* Actions */}
               <div className="lg:col-span-3 flex flex-col sm:flex-row lg:flex-col gap-3 justify-end">
-                {featuredEvent.ticketUrl ? (
+                {ticketUrl ? (
                   <a
-                    href={featuredEvent.ticketUrl}
+                    href={ticketUrl}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="inline-flex items-center justify-center px-6 py-3.5 bg-grains-red hover:bg-grains-red-bright text-white text-xs font-mono tracking-widest uppercase rounded-sm transition-all duration-200 shadow-subtle hover:shadow-accent hover:-translate-y-0.5"
                   >
-                    <span>Reserve Tickets</span>
+                    <span>{buttonText}</span>
                     <ArrowUpRight className="w-4 h-4 ml-2 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
                   </a>
                 ) : (

@@ -148,6 +148,19 @@ export const homePage = defineType({
       description: 'When turned on, the next upcoming event will be highlighted on the homepage.',
     }),
     defineField({
+      name: 'featuredEventTicketUrl',
+      type: 'url',
+      title: 'Featured Event Ticket Link Override (Optional)',
+      group: 'featured',
+      placeholder: 'https://...',
+      description: 'Override the ticket link for the upcoming event on the homepage. Leave empty to automatically use the event\'s ticket link from Concerts & Events.',
+      validation: (Rule) =>
+        Rule.uri({
+          scheme: ['http', 'https'],
+          allowRelative: true,
+        }),
+    }),
+    defineField({
       name: 'galleryCount',
       type: 'number',
       title: 'Number of Gallery Photos to Show',

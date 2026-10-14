@@ -114,6 +114,8 @@ export interface EventItem {
   description?: string;
   posterImage?: SanityImage;
   ticketUrl?: string;
+  ticketLink?: string;
+  ticketButtonText?: string;
   isFree?: boolean;
   accessibilityNotes?: string;
   featured?: boolean;
@@ -215,6 +217,7 @@ export interface HomePageData {
   pullQuoteEyebrow?: string;
   quickLinks?: QuickLinkItem[];
   showFeaturedEvent?: boolean;
+  featuredEventTicketUrl?: string;
   galleryCount?: number;
   primaryCtaText?: string;
   primaryCtaLink?: string;

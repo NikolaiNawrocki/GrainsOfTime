@@ -97,20 +97,20 @@ export const event = defineType({
       name: 'startDate',
       title: 'Start Date & Time',
       type: 'datetime',
-      group: 'location',
+      group: ['details', 'location'],
       validation: (Rule) => Rule.required(),
     }),
     defineField({
       name: 'endDate',
       title: 'End Date & Time (optional)',
       type: 'datetime',
-      group: 'location',
+      group: ['details', 'location'],
     }),
     defineField({
       name: 'venue',
       title: 'Venue Name',
       type: 'string',
-      group: 'location',
+      group: ['details', 'location'],
       description: 'e.g. Stewart Theatre, Talley Student Union',
       validation: (Rule) => Rule.required(),
     }),
@@ -133,14 +133,28 @@ export const event = defineType({
       name: 'ticketUrl',
       title: 'Ticket / RSVP Link',
       type: 'url',
-      group: 'tickets',
-      description: 'Link to buy tickets or RSVP (e.g. Eventbrite, university tickets page). Leave empty if not applicable.',
+      group: ['details', 'tickets'],
+      placeholder: 'https://...',
+      description: 'Direct link to buy tickets or RSVP (e.g. Eventbrite, university tickets page). Appears on the website as the ticket button.',
+      validation: (Rule) =>
+        Rule.uri({
+          scheme: ['http', 'https'],
+          allowRelative: true,
+        }),
+    }),
+    defineField({
+      name: 'ticketButtonText',
+      title: 'Ticket Button Label (optional)',
+      type: 'string',
+      group: ['details', 'tickets'],
+      placeholder: 'Tickets (or Free RSVP)',
+      description: 'Custom text for the ticket button (e.g. "Reserve Tickets", "Buy Tickets", "RSVP"). Defaults to "Tickets" (or "Free RSVP" if free admission is checked).',
     }),
     defineField({
       name: 'isFree',
       title: 'Free Admission',
       type: 'boolean',
-      group: 'tickets',
+      group: ['details', 'tickets'],
       initialValue: false,
       description: 'Turn this on if the event has free admission.',
     }),
@@ -192,8 +206,9 @@ export const event = defineType({
       venue: 'venue',
       status: 'status',
       media: 'posterImage',
+      ticketUrl: 'ticketUrl',
     },
-    prepare({ title, date, venue, status, media }) {
+    prepare({ title, date, venue, status, media, ticketUrl }) {
       const d = date ? new Date(date).toLocaleDateString() : 'Date TBA';
       const statusLabel: Record<string, string> = {
         published: '● Live',
@@ -202,9 +217,10 @@ export const event = defineType({
         cancelled: '✕ Cancelled',
         archived: '◻ Archived',
       };
+      const ticketBadge = ticketUrl ? '🎟️ Tickets Link' : '';
       return {
         title,
-        subtitle: `${d} @ ${venue} — ${statusLabel[status] || status}`,
+        subtitle: `${d} @ ${venue} — ${statusLabel[status] || status}${ticketBadge ? ` • ${ticketBadge}` : ''}`,
         media,
       };
     },
