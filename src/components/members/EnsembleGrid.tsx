@@ -12,13 +12,49 @@ interface EnsembleGridProps {
   members: Member[];
 }
 
-const vocalSections: ("All" | VocalPart)[] = [
-  "All",
-  "Tenor 1",
-  "Tenor 2",
-  "Baritone",
-  "Bass",
-  "Vocal Percussion",
+export type GradeLevel = "Senior" | "Junior" | "Sophomore" | "Freshman" | "Other";
+
+export function getMemberGradeLevel(member: Member): GradeLevel {
+  const grad = String(member.graduationYear || "").trim().toLowerCase();
+  if (grad.includes("senior") || grad.includes("4th year") || grad.includes("fourth year")) return "Senior";
+  if (grad.includes("junior") || grad.includes("3rd year") || grad.includes("third year")) return "Junior";
+  if (grad.includes("sophomore") || grad.includes("2nd year") || grad.includes("second year")) return "Sophomore";
+  if (grad.includes("freshman") || grad.includes("1st year") || grad.includes("first year")) return "Freshman";
+
+  const bio = (member.bio || "").toLowerCase();
+  if (bio.startsWith("senior") || bio.includes("senior ")) return "Senior";
+  if (bio.startsWith("junior") || bio.includes("junior ")) return "Junior";
+  if (bio.startsWith("sophomore") || bio.includes("sophomore ")) return "Sophomore";
+  if (bio.startsWith("freshman") || bio.includes("freshman ")) return "Freshman";
+
+  const yearMatch = grad.match(/\d{4}/);
+  if (yearMatch) {
+    const yr = parseInt(yearMatch[0], 10);
+    if (yr <= 2026) return "Senior";
+    if (yr === 2027) return "Junior";
+    if (yr === 2028) return "Sophomore";
+    if (yr >= 2029) return "Freshman";
+  }
+
+  return "Other";
+}
+
+const GRADE_RANK: Record<GradeLevel, number> = {
+  Senior: 1,
+  Junior: 2,
+  Sophomore: 3,
+  Freshman: 4,
+  Other: 5,
+};
+
+type FilterOption = "All" | GradeLevel;
+
+const filterOptions: { id: FilterOption; label: string }[] = [
+  { id: "All", label: "All" },
+  { id: "Senior", label: "Seniors" },
+  { id: "Junior", label: "Juniors" },
+  { id: "Sophomore", label: "Sophomores" },
+  { id: "Freshman", label: "Freshmen" },
 ];
 
 const LOCAL_HEADSHOTS: Record<string, string> = {
@@ -50,43 +86,50 @@ export function getMemberImageUrl(member: Member): string | null {
 }
 
 export function EnsembleGrid({ members }: EnsembleGridProps) {
-  const [selectedPart, setSelectedPart] = useState<"All" | VocalPart>("All");
+  const [selectedGrade, setSelectedGrade] = useState<FilterOption>("All");
   const [activeMember, setActiveMember] = useState<Member | null>(null);
 
   const filteredMembers = useMemo(() => {
-    if (selectedPart === "All") return members;
-    if (selectedPart === "Vocal Percussion") {
-      return members.filter(
-        (m) =>
-          m.vocalPart.includes("Vocal Percussion") ||
-          m.vocalPart.includes("VP")
-      );
+    const sorted = [...members].sort((a, b) => {
+      const gradeA = getMemberGradeLevel(a);
+      const gradeB = getMemberGradeLevel(b);
+      const rankDiff = (GRADE_RANK[gradeA] ?? 99) - (GRADE_RANK[gradeB] ?? 99);
+      if (rankDiff !== 0) return rankDiff;
+      const orderA = a.order ?? 999;
+      const orderB = b.order ?? 999;
+      if (orderA !== orderB) return orderA - orderB;
+      return a.name.localeCompare(b.name);
+    });
+
+    if (selectedGrade === "All") {
+      return sorted;
     }
-    return members.filter((m) => m.vocalPart.includes(selectedPart));
-  }, [members, selectedPart]);
+
+    return sorted.filter((m) => getMemberGradeLevel(m) === selectedGrade);
+  }, [members, selectedGrade]);
 
   return (
     <div>
-      {/* Section Filter Controls */}
+      {/* Grade Level Filter Controls */}
       <ScrollReveal direction="up" distance={12} duration={500}>
         <div className="flex items-center gap-2 overflow-x-auto pb-4 mb-12 border-b border-grains-border no-scrollbar">
           <span className="text-xs font-mono text-grains-muted uppercase tracking-widest mr-2 whitespace-nowrap">
-            Filter By Part:
+            Filter By Class:
           </span>
-          {vocalSections.map((part) => {
-            const isSelected = selectedPart === part;
+          {filterOptions.map((option) => {
+            const isSelected = selectedGrade === option.id;
             return (
               <button
-                key={part}
+                key={option.id}
                 type="button"
-                onClick={() => setSelectedPart(part)}
+                onClick={() => setSelectedGrade(option.id)}
                 className={`px-4 py-2 text-xs font-mono tracking-wider uppercase rounded-sm transition-all whitespace-nowrap ${
                   isSelected
                     ? "bg-grains-red text-white shadow-subtle font-medium"
                     : "bg-white hover:bg-grains-cream text-grains-black border border-grains-border"
                 }`}
               >
-                {part}
+                {option.label}
               </button>
             );
           })}
@@ -189,6 +232,12 @@ export function EnsembleGrid({ members }: EnsembleGridProps) {
           );
         })}
       </div>
+
+      {filteredMembers.length === 0 && (
+        <div className="py-12 text-center text-grains-muted font-mono text-sm">
+          No members found in this class.
+        </div>
+      )}
 
       {/* Member Details Modal */}
       <Modal

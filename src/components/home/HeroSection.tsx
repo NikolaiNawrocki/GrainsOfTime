@@ -3,9 +3,6 @@ import Image from "next/image";
 import { ArrowRight, Disc3 } from "lucide-react";
 import { EditorialImage } from "@/components/ui/EditorialImage";
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
-import { AnimatedCounter } from "@/components/ui/AnimatedCounter";
-import { VisualAcousticPulse } from "@/components/ui/VisualAcousticPulse";
-import { CampusClock } from "@/components/ui/CampusClock";
 import { SiteSettings, HomePageData } from "@/types";
 
 interface HeroSectionProps {
@@ -14,9 +11,6 @@ interface HeroSectionProps {
 }
 
 export function HeroSection({ settings, content }: HeroSectionProps) {
-  const currentYear = new Date().getFullYear();
-  const yearsActive = currentYear - (settings?.foundedYear || 1968);
-
   const heading = content?.heroHeading || "Grains of Time";
   const subtitle = content?.heroSubtitle || "NC State’s Premier All-Male A Cappella Ensemble";
   const tagline = content?.heroTagline || "Individual voices accumulating into a lasting legacy.";
@@ -47,32 +41,8 @@ export function HeroSection({ settings, content }: HeroSectionProps) {
   return (
     <section className="relative pt-12 pb-20 sm:pt-16 sm:pb-28 border-b border-grains-border overflow-hidden bg-grains-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
-        {/* Archival metadata line with dynamic live campus indicator */}
-        <ScrollReveal direction="down" distance={12} duration={500}>
-          <div className="flex flex-wrap items-center justify-between gap-4 pb-8 border-b border-grains-border text-xs font-mono tracking-[0.25em] text-grains-muted uppercase">
-            <div className="flex items-center gap-3">
-              <span className="w-2 h-2 rounded-full bg-grains-red animate-pulse" />
-              <span className="text-grains-black font-medium">{settings?.locationAffiliation || "North Carolina State University"}</span>
-              <span className="hidden sm:inline text-grains-border">•</span>
-              <span className="hidden sm:inline"><CampusClock /></span>
-            </div>
-            <div className="flex items-center gap-4 text-grains-muted">
-              <span>Est. {settings?.foundedYear || 1968}</span>
-              <span>•</span>
-              <div className="flex items-center gap-1.5">
-                <VisualAcousticPulse size="sm" />
-                <span>Raleigh, NC</span>
-              </div>
-              <span>•</span>
-              <span className="text-grains-black font-medium">
-                <AnimatedCounter target={yearsActive} startFrom={40} duration={1400} /> Years of Brotherhood
-              </span>
-            </div>
-          </div>
-        </ScrollReveal>
-
         {/* Cinematic Title & Wordmark with Heritage Seal */}
-        <div className="pt-10 sm:pt-14 pb-8 flex flex-col md:flex-row md:items-end md:justify-between gap-6">
+        <div className="pt-2 sm:pt-4 pb-8 flex flex-col md:flex-row md:items-end md:justify-between gap-6">
           <div>
             <ScrollReveal direction="up" distance={20} duration={700} delay={100}>
               {renderTitle()}
