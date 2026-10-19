@@ -33,9 +33,7 @@ export default async function MembersPage() {
       <ScrollReveal direction="up" distance={16} duration={600}>
         <div className="mb-10">
           <SectionHeading
-            eyebrow={eyebrow}
             title={title}
-            subtitle={subtitle}
           />
         </div>
       </ScrollReveal>

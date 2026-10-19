@@ -23,9 +23,7 @@ export default async function EventsPage() {
       <ScrollReveal direction="up" distance={16} duration={600}>
         <div className="mb-14">
           <SectionHeading
-            eyebrow="Concert Calendar"
             title="Performances & Tickets"
-            subtitle="Join us live on campus in Raleigh and at collegiate a cappella showcases across the East Coast."
           />
         </div>
       </ScrollReveal>

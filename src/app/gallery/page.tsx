@@ -20,9 +20,7 @@ export default async function GalleryPage() {
       <ScrollReveal direction="up" distance={16} duration={600}>
         <div className="mb-14">
           <SectionHeading
-            eyebrow="Visual Living Archive"
             title="Moments & Memories"
-            subtitle="A curated photographic chronicle of live performances, rehearsal craft, and collegiate brotherhood."
           />
         </div>
       </ScrollReveal>

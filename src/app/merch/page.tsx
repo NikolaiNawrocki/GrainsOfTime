@@ -23,9 +23,7 @@ export default async function MerchPage() {
       <ScrollReveal direction="up" distance={16} duration={600}>
         <div className="mb-14">
           <SectionHeading
-            eyebrow="Wolfpack Gear"
             title="Official Merchandise"
-            subtitle="Support Grains of Time by wearing official apparel, tour tees, and accessories."
           />
         </div>
       </ScrollReveal>

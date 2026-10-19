@@ -4,7 +4,6 @@ import {
   getUpcomingEvents,
 } from "@/lib/sanity/queries";
 import { HeroSection } from "@/components/home/HeroSection";
-import { EditorialStatement } from "@/components/home/EditorialStatement";
 import { FeaturedEventCard } from "@/components/home/FeaturedEventCard";
 import { ArchivalFeature } from "@/components/home/ArchivalFeature";
 
@@ -22,14 +21,13 @@ export default async function HomePage() {
   return (
     <div className="flex flex-col w-full">
       <HeroSection settings={settings} content={homeContent} />
-      <EditorialStatement content={homeContent} />
       {showEvents && (
         <FeaturedEventCard
           events={upcomingEvents}
           ticketUrlOverride={homeContent?.featuredEventTicketUrl}
         />
       )}
-      <ArchivalFeature content={homeContent} />
+      <ArchivalFeature content={homeContent} settings={settings} />
     </div>
   );
 }

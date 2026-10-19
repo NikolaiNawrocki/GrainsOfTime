@@ -28,9 +28,7 @@ export default async function RepertoirePage() {
       <ScrollReveal direction="up" distance={16} duration={600}>
         <div className="mb-14 flex flex-col md:flex-row md:items-end justify-between gap-6 pb-6 border-b border-grains-border">
           <SectionHeading
-            eyebrow="Musical Catalogue"
             title="Arrangements & Setlists"
-            subtitle="A living catalogue of contemporary songs, rock anthems, and NC State traditions arranged exclusively for the human voice."
           />
 
           <a

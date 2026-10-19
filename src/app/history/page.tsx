@@ -34,9 +34,7 @@ export default async function HistoryPage() {
       <ScrollReveal direction="up" distance={16} duration={600}>
         <div className="mb-16">
           <SectionHeading
-            eyebrow={eyebrow}
             title={title}
-            subtitle={subtitle}
           />
         </div>
       </ScrollReveal>

@@ -66,12 +66,12 @@ export function Header({ settings }: HeaderProps) {
               priority
             />
           </div>
-          <div className="flex flex-col">
+          <div className="flex flex-col items-center text-center">
             <span className="font-serif text-lg sm:text-xl xl:text-2xl tracking-tight text-grains-black group-hover:text-grains-red transition-colors whitespace-nowrap">
               GRAINS <span className="text-grains-red">OF</span> TIME
             </span>
-            <span className="text-[9px] xl:text-[10px] font-mono tracking-[0.2em] xl:tracking-[0.25em] text-grains-muted uppercase -mt-0.5 whitespace-nowrap">
-              NC STATE • EST. 1968
+            <span className="text-[9px] xl:text-[10px] font-mono tracking-[0.2em] xl:tracking-[0.25em] text-grains-muted uppercase -mt-0.5 whitespace-nowrap text-center">
+              NC State University
             </span>
           </div>
         </Link>
@@ -89,10 +89,10 @@ export function Header({ settings }: HeaderProps) {
               <Link
                 key={item.href}
                 href={item.href}
-                className={`px-2 xl:px-2.5 py-1 text-[11px] xl:text-xs tracking-[0.08em] xl:tracking-[0.14em] transition-all relative group whitespace-nowrap rounded-sm ${
+                className={`px-2 xl:px-2.5 py-1 text-[11px] xl:text-xs tracking-[0.08em] xl:tracking-[0.14em] font-bold transition-all relative group whitespace-nowrap rounded-sm ${
                   isActive
-                    ? "text-grains-black font-semibold after:absolute after:bottom-0 after:left-2 after:right-2 xl:after:left-2.5 xl:after:right-2.5 after:h-[2px] after:bg-grains-red"
-                    : "text-grains-black/75 hover:text-grains-red hover:-translate-y-0.5"
+                    ? "text-grains-black after:absolute after:bottom-0 after:left-2 after:right-2 xl:after:left-2.5 xl:after:right-2.5 after:h-[2px] after:bg-grains-red"
+                    : "text-grains-black/80 hover:text-grains-red hover:-translate-y-0.5"
                 }`}
               >
                 {item.label}

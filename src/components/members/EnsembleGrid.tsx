@@ -2,11 +2,11 @@
 
 import { useState, useMemo } from "react";
 import Image from "next/image";
-import { Member, VocalPart } from "@/types";
+import { Member } from "@/types";
 import { urlForImage } from "@/sanity/image";
 import { Modal } from "@/components/ui/Modal";
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
-import { User, MapPin, GraduationCap, BookOpen, Music, Sparkles } from "lucide-react";
+import { User, MapPin, BookOpen, Music, Sparkles } from "lucide-react";
 
 interface EnsembleGridProps {
   members: Member[];
@@ -47,27 +47,20 @@ const GRADE_RANK: Record<GradeLevel, number> = {
   Other: 5,
 };
 
-type FilterOption = "All" | GradeLevel;
-
-const filterOptions: { id: FilterOption; label: string }[] = [
-  { id: "All", label: "All" },
-  { id: "Senior", label: "Seniors" },
-  { id: "Junior", label: "Juniors" },
-  { id: "Sophomore", label: "Sophomores" },
-  { id: "Freshman", label: "Freshmen" },
-];
-
 const LOCAL_HEADSHOTS: Record<string, string> = {
   jonathan: "/headshots/Johnathan.jpeg",
   johnathan: "/headshots/Johnathan.jpeg",
+  jon: "/headshots/Johnathan.jpeg",
   landon: "/headshots/Landon.jpeg",
   caleb: "/headshots/Caleb.jpeg",
   max: "/headshots/Max.jpeg",
   davis: "/headshots/Davis.jpeg",
   isaac: "/headshots/Isaac.jpeg",
+  zaza: "/headshots/Isaac.jpeg",
   zeke: "/headshots/Zeke.jpeg",
   brock: "/headshots/Brock.jpeg",
   zackary: "/headshots/Zackary.jpeg",
+  zack: "/headshots/Zackary.jpeg",
   sid: "/headshots/Sid.jpeg",
   nikolai: "/headshots/Nikolai.jpeg",
   noah: "/headshots/Noah.jpeg",
@@ -81,49 +74,192 @@ export function getMemberImageUrl(member: Member): string | null {
     const url = urlForImage(member.portrait)?.url();
     if (url) return url;
   }
-  const firstName = member.name.trim().split(" ")[0].toLowerCase();
+  const firstName = member.name.trim().split(/\s+/)[0].toLowerCase();
   return LOCAL_HEADSHOTS[firstName] || null;
 }
 
+// Explicit ordering requirement:
+// Exec position, and then grade level after:
+// Davis, Zeke, Max, Jude, Zaza, Henry, Aaron, Jon, Brock, Caleb, Zack, Landon, Nikolai, Noah, Sid
+const ORDERED_NAMES: Record<string, number> = {
+  davis: 1,
+  zeke: 2,
+  max: 3,
+  jude: 4,
+  zaza: 5,
+  isaac: 5,
+  henry: 6,
+  aaron: 7,
+  jon: 8,
+  jonathan: 8,
+  johnathan: 8,
+  brock: 9,
+  caleb: 10,
+  zack: 11,
+  zackary: 11,
+  landon: 12,
+  nikolai: 13,
+  noah: 14,
+  sid: 15,
+};
+
+function getMemberOrderScore(member: Member): number {
+  const parts = member.name.trim().toLowerCase().split(/\s+/);
+  const firstName = parts[0] || "";
+  const lastName = parts[parts.length - 1] || "";
+
+  if (ORDERED_NAMES[firstName] !== undefined) {
+    return ORDERED_NAMES[firstName];
+  }
+  if (lastName === "casazza") {
+    return 5;
+  }
+
+  if (member.leadershipRole) {
+    return 6.5 + (member.order ?? 99) * 0.01;
+  }
+  const grade = getMemberGradeLevel(member);
+  return 20 + (GRADE_RANK[grade] ?? 5) * 10 + (member.order ?? 99);
+}
+
+interface MemberGroup {
+  id: string;
+  title: string;
+  description?: string;
+  members: Member[];
+}
+
 export function EnsembleGrid({ members }: EnsembleGridProps) {
-  const [selectedGrade, setSelectedGrade] = useState<FilterOption>("All");
+  const [selectedFilter, setSelectedFilter] = useState<string>("All");
   const [activeMember, setActiveMember] = useState<Member | null>(null);
 
-  const filteredMembers = useMemo(() => {
-    const sorted = [...members].sort((a, b) => {
-      const gradeA = getMemberGradeLevel(a);
-      const gradeB = getMemberGradeLevel(b);
-      const rankDiff = (GRADE_RANK[gradeA] ?? 99) - (GRADE_RANK[gradeB] ?? 99);
-      if (rankDiff !== 0) return rankDiff;
+  // Sort all members by the required order
+  const sortedMembers = useMemo(() => {
+    return [...members].sort((a, b) => {
+      const scoreA = getMemberOrderScore(a);
+      const scoreB = getMemberOrderScore(b);
+      if (scoreA !== scoreB) return scoreA - scoreB;
       const orderA = a.order ?? 999;
       const orderB = b.order ?? 999;
       if (orderA !== orderB) return orderA - orderB;
       return a.name.localeCompare(b.name);
     });
+  }, [members]);
 
-    if (selectedGrade === "All") {
-      return sorted;
+  // Organize by Exec position, then grade level after
+  const groups: MemberGroup[] = useMemo(() => {
+    const execMembers: Member[] = [];
+    const seniorMembers: Member[] = [];
+    const juniorMembers: Member[] = [];
+    const sophomoreMembers: Member[] = [];
+    const freshmanMembers: Member[] = [];
+    const otherMembers: Member[] = [];
+
+    sortedMembers.forEach((member) => {
+      if (member.leadershipRole) {
+        execMembers.push(member);
+        return;
+      }
+
+      const grade = getMemberGradeLevel(member);
+      if (grade === "Senior") {
+        seniorMembers.push(member);
+      } else if (grade === "Junior") {
+        juniorMembers.push(member);
+      } else if (grade === "Sophomore") {
+        sophomoreMembers.push(member);
+      } else if (grade === "Freshman") {
+        freshmanMembers.push(member);
+      } else {
+        otherMembers.push(member);
+      }
+    });
+
+    const result: MemberGroup[] = [];
+
+    if (execMembers.length > 0) {
+      result.push({
+        id: "exec",
+        title: "Executive Board",
+        description: "Student Leadership",
+        members: execMembers,
+      });
+    }
+    if (seniorMembers.length > 0) {
+      result.push({
+        id: "seniors",
+        title: "Seniors",
+        description: "Class of 2026",
+        members: seniorMembers,
+      });
+    }
+    if (juniorMembers.length > 0) {
+      result.push({
+        id: "juniors",
+        title: "Juniors",
+        description: "Class of 2027",
+        members: juniorMembers,
+      });
+    }
+    if (sophomoreMembers.length > 0) {
+      result.push({
+        id: "sophomores",
+        title: "Sophomores",
+        description: "Class of 2028",
+        members: sophomoreMembers,
+      });
+    }
+    if (freshmanMembers.length > 0) {
+      result.push({
+        id: "freshmen",
+        title: "Freshmen",
+        description: "Class of 2029",
+        members: freshmanMembers,
+      });
+    }
+    if (otherMembers.length > 0) {
+      result.push({
+        id: "other",
+        title: "Ensemble",
+        members: otherMembers,
+      });
     }
 
-    return sorted.filter((m) => getMemberGradeLevel(m) === selectedGrade);
-  }, [members, selectedGrade]);
+    return result;
+  }, [sortedMembers]);
+
+  // Build filter tabs dynamically from available groups
+  const filterOptions = useMemo(() => {
+    return [
+      { id: "All", label: "All" },
+      ...groups.map((g) => ({ id: g.id, label: g.title })),
+    ];
+  }, [groups]);
+
+  // Determine groups to render based on active filter
+  const displayedGroups = useMemo(() => {
+    if (selectedFilter === "All") {
+      return groups;
+    }
+    return groups.filter((g) => g.id === selectedFilter);
+  }, [groups, selectedFilter]);
 
   return (
     <div>
-      {/* Grade Level Filter Controls */}
+      {/* Category / Grade Level Filter Controls */}
       <ScrollReveal direction="up" distance={12} duration={500}>
-        <div className="flex items-center gap-2 overflow-x-auto pb-4 mb-12 border-b border-grains-border no-scrollbar">
+        <div className="flex items-center gap-2 overflow-x-auto pb-4 mb-10 border-b border-grains-border no-scrollbar">
           <span className="text-xs font-mono text-grains-muted uppercase tracking-widest mr-2 whitespace-nowrap">
-            Filter By Class:
+            Filter:
           </span>
           {filterOptions.map((option) => {
-            const isSelected = selectedGrade === option.id;
+            const isSelected = selectedFilter === option.id;
             return (
               <button
                 key={option.id}
                 type="button"
-                onClick={() => setSelectedGrade(option.id)}
-                className={`px-4 py-2 text-xs font-mono tracking-wider uppercase rounded-sm transition-all whitespace-nowrap ${
+                onClick={() => setSelectedFilter(option.id)}
+                className={`px-3.5 py-1.5 text-xs font-mono tracking-wider uppercase rounded-sm transition-all whitespace-nowrap ${
                   isSelected
                     ? "bg-grains-red text-white shadow-subtle font-medium"
                     : "bg-white hover:bg-grains-cream text-grains-black border border-grains-border"
@@ -136,106 +272,131 @@ export function EnsembleGrid({ members }: EnsembleGridProps) {
         </div>
       </ScrollReveal>
 
-      {/* Editorial Roster Grid */}
-      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-5 gap-3.5 sm:gap-5">
-        {filteredMembers.map((member, idx) => {
-          const imageUrl = getMemberImageUrl(member);
-
-          return (
-            <ScrollReveal
-              key={member._id}
-              direction="up"
-              distance={20}
-              duration={600}
-              delay={(idx % 5) * 60}
-              className="h-full"
-            >
-              <div
-                onClick={() => setActiveMember(member)}
-                onKeyDown={(e) => {
-                  if (e.key === "Enter" || e.key === " ") {
-                    e.preventDefault();
-                    setActiveMember(member);
-                  }
-                }}
-                tabIndex={0}
-                role="button"
-                aria-label={`View details for ${member.name}`}
-                className="group relative bg-white border border-grains-border hover:border-grains-black/40 rounded-sm overflow-hidden text-left cursor-pointer transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-grains-red flex flex-col h-full shadow-subtle hover:shadow-editorial"
-              >
-                {/* Member Visual Container */}
-                <div className="relative aspect-[4/5] w-full overflow-hidden bg-grains-cream">
-                  {imageUrl ? (
-                    <Image
-                      src={imageUrl}
-                      alt={member.portrait?.alt || member.name}
-                      fill
-                      sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 20vw"
-                      className="object-cover transition-transform duration-500 group-hover:scale-105"
-                    />
-                  ) : (
-                    <div className="absolute inset-0 flex flex-col items-center justify-center p-4 text-center bg-gradient-to-b from-grains-cream to-grains-cream-dark">
-                      <div className="w-12 h-12 rounded-full border border-grains-border bg-white flex items-center justify-center mb-2 group-hover:border-grains-red/40 transition-colors">
-                        <User className="w-6 h-6 text-grains-muted group-hover:text-grains-black transition-colors" />
-                      </div>
-                      <span className="text-[9px] font-mono tracking-widest text-grains-black uppercase border border-grains-border bg-white/80 px-2 py-0.5 rounded-sm">
-                        {member.vocalPart}
-                      </span>
-                      <span className="text-[9px] font-mono text-grains-muted mt-1.5 tracking-wider">
-                        {member.isPlaceholder ? "Info Pending" : "Portrait Pending"}
-                      </span>
-                    </div>
-                  )}
-
-                  {/* Leadership badge if applicable */}
-                  {member.leadershipRole && (
-                    <div className="absolute top-2.5 left-2.5 z-10">
-                      <span className="px-2 py-0.5 bg-white/95 backdrop-blur-sm border border-grains-red/30 text-grains-red text-[9px] font-mono uppercase tracking-wider rounded-sm font-medium shadow-subtle">
-                        {member.leadershipRole}
-                      </span>
-                    </div>
-                  )}
+      {/* Sections Organized by Exec Position then Grade Level */}
+      <div className="space-y-12">
+        {displayedGroups.map((group, groupIdx) => (
+          <section key={group.id} className="relative">
+            {/* Section Header */}
+            <ScrollReveal direction="up" distance={12} duration={500} delay={groupIdx * 50}>
+              <div className="flex items-baseline justify-between border-b border-grains-border pb-2.5 mb-5">
+                <div className="flex items-center gap-2.5">
+                  <h2 className="text-lg sm:text-xl font-serif text-grains-black tracking-tight">
+                    {group.title}
+                  </h2>
+                  <span className="text-xs font-mono text-grains-muted uppercase tracking-wider">
+                    ({group.members.length})
+                  </span>
                 </div>
-
-                {/* Card Meta Content */}
-                <div className="p-3.5 sm:p-4 flex-1 flex flex-col justify-between border-t border-grains-border">
-                  <div>
-                    <div className="flex items-center justify-between text-[10px] sm:text-xs font-mono text-grains-muted uppercase tracking-wider mb-1">
-                      <span className="text-grains-red font-semibold truncate mr-1">{member.vocalPart}</span>
-                      {member.graduationYear && (
-                        <span className="shrink-0">
-                          {/^\d{4}$/.test(String(member.graduationYear))
-                            ? `'${String(member.graduationYear).slice(-2)}`
-                            : member.graduationYear}
-                        </span>
-                      )}
-                    </div>
-                    <h3 className="text-base sm:text-lg font-serif text-grains-black group-hover:text-grains-red transition-colors leading-tight line-clamp-1">
-                      {member.name}
-                    </h3>
-                    {member.major && (
-                      <p className="text-[11px] sm:text-xs text-grains-muted mt-1 font-sans line-clamp-1">
-                        {member.major}
-                      </p>
-                    )}
-                  </div>
-
-                  <div className="mt-3 pt-2.5 border-t border-grains-border flex items-center justify-between text-[10px] sm:text-[11px] font-mono text-grains-muted uppercase tracking-wider">
-                    <span>Profile</span>
-                    <span className="group-hover:translate-x-1 transition-transform text-grains-red font-semibold">
-                      &rarr;
-                    </span>
-                  </div>
-                </div>
+                {group.description && (
+                  <span className="hidden sm:inline-block text-xs font-mono text-grains-muted uppercase tracking-wider">
+                    {group.description}
+                  </span>
+                )}
               </div>
             </ScrollReveal>
-          );
-        })}
+
+            {/* Grid of Compact Member Cards (6 cols on xl, 5 on lg, 4 on md, 3 on sm, 2 on mobile) */}
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-3 sm:gap-3.5 md:gap-4">
+              {group.members.map((member, idx) => {
+                const imageUrl = getMemberImageUrl(member);
+                const gradeLevel = getMemberGradeLevel(member);
+
+                return (
+                  <ScrollReveal
+                    key={member._id}
+                    direction="up"
+                    distance={16}
+                    duration={500}
+                    delay={(idx % 6) * 45}
+                    className="h-full"
+                  >
+                    <div
+                      onClick={() => setActiveMember(member)}
+                      onKeyDown={(e) => {
+                        if (e.key === "Enter" || e.key === " ") {
+                          e.preventDefault();
+                          setActiveMember(member);
+                        }
+                      }}
+                      tabIndex={0}
+                      role="button"
+                      aria-label={`View profile for ${member.name}`}
+                      className="group relative bg-white border border-grains-border hover:border-grains-black/40 rounded-sm overflow-hidden text-center cursor-pointer transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-grains-red flex flex-col h-full shadow-subtle hover:shadow-editorial"
+                    >
+                      {/* Photo Container with Centered Bottom Badge */}
+                      <div className="relative aspect-[4/5] w-full bg-grains-cream">
+                        <div className="absolute inset-0 overflow-hidden">
+                          {imageUrl ? (
+                            <Image
+                              src={imageUrl}
+                              alt={member.portrait?.alt || member.name}
+                              fill
+                              sizes="(max-width: 640px) 50vw, (max-width: 1024px) 25vw, 17vw"
+                              className="object-cover transition-transform duration-500 group-hover:scale-105"
+                            />
+                          ) : (
+                            <div className="absolute inset-0 flex flex-col items-center justify-center p-3 text-center bg-gradient-to-b from-grains-cream to-grains-cream-dark">
+                              <div className="w-10 h-10 rounded-full border border-grains-border bg-white flex items-center justify-center mb-1.5 group-hover:border-grains-red/40 transition-colors">
+                                <User className="w-5 h-5 text-grains-muted group-hover:text-grains-black transition-colors" />
+                              </div>
+                              <span className="text-[8px] font-mono tracking-widest text-grains-black uppercase border border-grains-border bg-white/80 px-1.5 py-0.5 rounded-sm">
+                                {member.vocalPart}
+                              </span>
+                            </div>
+                          )}
+                        </div>
+
+                        {/* Centered Overlapping Leadership Badge */}
+                        {member.leadershipRole && (
+                          <div className="absolute bottom-0 translate-y-1/2 left-1/2 -translate-x-1/2 z-10 w-[92%] px-1 flex justify-center">
+                            <span className="inline-block px-2 sm:px-2.5 py-0.5 bg-white border border-grains-red/35 text-grains-red text-[8.5px] sm:text-[9.5px] font-sans uppercase font-medium tracking-wider shadow-xs rounded-none truncate max-w-full">
+                              {member.leadershipRole}
+                            </span>
+                          </div>
+                        )}
+                      </div>
+
+                      {/* Card Body: Name, Grade, Hometown, Vocal Part, Profile */}
+                      <div className="pt-4 sm:pt-4.5 pb-3 px-2.5 sm:px-3 flex-1 flex flex-col justify-between text-center">
+                        <div>
+                          {/* Member Name */}
+                          <h3 className="text-sm sm:text-base font-sans font-normal sm:font-medium text-grains-black group-hover:text-grains-red transition-colors leading-snug line-clamp-1">
+                            {member.name}
+                          </h3>
+
+                          {/* Member Meta: Grade (red), Hometown (gray), Vocal Part (gray) */}
+                          <div className="mt-1.5 space-y-0.5">
+                            <p className="text-[10px] sm:text-[11px] font-sans font-semibold text-grains-red uppercase tracking-wider">
+                              {gradeLevel.toUpperCase()}
+                            </p>
+                            <p className="text-[9px] sm:text-[10px] font-sans text-grains-muted uppercase tracking-wider line-clamp-1">
+                              {member.hometown || member.major || <span className="opacity-0">&nbsp;</span>}
+                            </p>
+                            <p className="text-[9px] sm:text-[10px] font-sans text-grains-muted uppercase tracking-wider line-clamp-1">
+                              {member.vocalPart.toUpperCase()}
+                            </p>
+                          </div>
+                        </div>
+
+                        {/* Divider & Profile Link */}
+                        <div className="mt-3 pt-2.5 border-t border-grains-border/75">
+                          <span className="text-[9.5px] sm:text-[10.5px] font-sans text-grains-muted group-hover:text-grains-red transition-colors uppercase tracking-widest font-normal">
+                            Profile
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </ScrollReveal>
+                );
+              })}
+            </div>
+          </section>
+        ))}
       </div>
 
-      {filteredMembers.length === 0 && (
+      {displayedGroups.length === 0 && (
         <div className="py-12 text-center text-grains-muted font-mono text-sm">
-          No members found in this class.
+          No members found in this category.
         </div>
       )}
 
@@ -248,11 +409,12 @@ export function EnsembleGrid({ members }: EnsembleGridProps) {
       >
         {activeMember && (() => {
           const modalImageUrl = getMemberImageUrl(activeMember);
+          const modalGradeLevel = getMemberGradeLevel(activeMember);
           return (
             <div className="grid grid-cols-1 sm:grid-cols-12 gap-6 items-start">
               {modalImageUrl ? (
                 <div className="sm:col-span-5">
-                  <div className="relative aspect-[2/3] w-full max-w-[240px] sm:max-w-none mx-auto rounded-sm overflow-hidden border border-grains-border bg-grains-cream shadow-subtle">
+                  <div className="relative aspect-[4/5] sm:aspect-[2/3] w-full max-w-[240px] sm:max-w-none mx-auto rounded-sm overflow-hidden border border-grains-border bg-grains-cream shadow-subtle">
                     <Image
                       src={modalImageUrl}
                       alt={activeMember.portrait?.alt || activeMember.name}
@@ -264,7 +426,7 @@ export function EnsembleGrid({ members }: EnsembleGridProps) {
                 </div>
               ) : (
                 <div className="sm:col-span-5">
-                  <div className="relative aspect-[2/3] w-full max-w-[240px] sm:max-w-none mx-auto rounded-sm overflow-hidden border border-grains-border bg-grains-cream flex flex-col items-center justify-center p-6 text-center">
+                  <div className="relative aspect-[4/5] sm:aspect-[2/3] w-full max-w-[240px] sm:max-w-none mx-auto rounded-sm overflow-hidden border border-grains-border bg-grains-cream flex flex-col items-center justify-center p-6 text-center">
                     <div className="w-16 h-16 rounded-full border border-grains-border bg-white flex items-center justify-center mb-3">
                       <User className="w-8 h-8 text-grains-muted" />
                     </div>
@@ -283,13 +445,12 @@ export function EnsembleGrid({ members }: EnsembleGridProps) {
                   <span className="text-grains-red font-semibold">
                     {activeMember.vocalPart}
                   </span>
-                  {activeMember.graduationYear && (
-                    <span>
-                      {/^\d{4}$/.test(String(activeMember.graduationYear))
-                        ? `Class of ${activeMember.graduationYear}`
-                        : activeMember.graduationYear}
-                    </span>
-                  )}
+                  <span>
+                    {modalGradeLevel.toUpperCase()}
+                    {activeMember.graduationYear && /^\d{4}$/.test(String(activeMember.graduationYear))
+                      ? ` • '${String(activeMember.graduationYear).slice(-2)}`
+                      : ""}
+                  </span>
                 </div>
 
                 {activeMember.leadershipRole && (

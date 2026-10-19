@@ -33,14 +33,13 @@ export function FeaturedEventCard({ events, ticketUrlOverride }: FeaturedEventCa
             <SectionHeading
               eyebrow="On Stage"
               title="Next Live Performance"
-              subtitle="Catch Grains of Time live on campus and across North Carolina."
               theme="dark"
             />
             <Link
               href="/events"
               className="inline-flex items-center text-xs font-mono tracking-widest text-grains-red-bright hover:text-white uppercase transition-all duration-200 group"
             >
-              <span>Full Schedule & Archive</span>
+              <span>Full Event Schedule</span>
               <ArrowRight className="w-4 h-4 ml-1.5 transition-transform duration-200 group-hover:translate-x-1" />
             </Link>
           </div>
@@ -73,9 +72,6 @@ export function FeaturedEventCard({ events, ticketUrlOverride }: FeaturedEventCa
 
               {/* Event Details */}
               <div className="lg:col-span-6 space-y-3">
-                <span className="text-[11px] font-mono tracking-widest text-grains-red-bright uppercase block font-semibold">
-                  {featuredEvent.eventType === "concert" ? "Major Campus Showcase" : featuredEvent.eventType}
-                </span>
                 <h3 className="text-2xl sm:text-3xl font-serif text-white group-hover:text-slate-100 transition-colors">
                   {featuredEvent.title}
                 </h3>

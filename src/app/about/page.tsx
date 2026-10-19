@@ -109,7 +109,7 @@ export default async function AboutPage() {
       {/* Page Header */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-16 sm:mb-24">
         <ScrollReveal direction="up" distance={16} duration={600}>
-          <SectionHeading eyebrow={eyebrow} title={title} subtitle={subtitle} />
+          <SectionHeading title={title} />
         </ScrollReveal>
 
         {/* Hero Archival Image Grid */}

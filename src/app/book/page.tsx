@@ -78,9 +78,7 @@ export default async function BookPage() {
       <ScrollReveal direction="up" distance={16} duration={600}>
         <div className="mb-14 max-w-3xl">
           <SectionHeading
-            eyebrow="Commission & Hire"
             title={heading}
-            subtitle={subtitle}
           />
         </div>
       </ScrollReveal>
