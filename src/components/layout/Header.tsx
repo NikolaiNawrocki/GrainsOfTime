@@ -17,7 +17,6 @@ const navItems = [
   { href: "/about", label: "About" },
   { href: "/members", label: "Members" },
   { href: "/events", label: "Events" },
-  { href: "/history", label: "Archive" },
   { href: "/repertoire", label: "Repertoire" },
   { href: "/gallery", label: "Gallery" },
   { href: "/merch", label: "Merch" },

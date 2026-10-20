@@ -101,11 +101,6 @@ export function RepertoireList({ items }: RepertoireListProps) {
                     <h3 className="text-lg sm:text-xl font-serif text-grains-black font-normal">
                       {item.title}
                     </h3>
-                    {item.category && (
-                      <span className="text-[10px] font-mono tracking-wider uppercase px-2 py-0.5 bg-grains-cream border border-grains-border text-grains-black font-medium rounded-sm">
-                        {item.category}
-                      </span>
-                    )}
                   </div>
 
                   <p className="text-xs text-grains-muted font-sans">

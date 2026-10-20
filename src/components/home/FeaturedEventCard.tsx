@@ -31,7 +31,6 @@ export function FeaturedEventCard({ events, ticketUrlOverride }: FeaturedEventCa
         <ScrollReveal direction="up" distance={16} duration={600}>
           <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-4">
             <SectionHeading
-              eyebrow="On Stage"
               title="Next Live Performance"
               theme="dark"
             />

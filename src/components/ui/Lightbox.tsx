@@ -119,31 +119,18 @@ export function Lightbox({
             />
           ) : (
             <div className="w-full h-full max-w-2xl flex flex-col items-center justify-center p-8 bg-zinc-900/90 border border-white/15 rounded-sm text-center">
-              <span className="text-xs font-mono tracking-widest text-slate-400 uppercase mb-2">
+              <span className="text-xs font-mono tracking-widest text-slate-400 uppercase">
                 Gallery Photograph
               </span>
-              <h3 className="text-xl font-serif text-white mb-2">
-                {currentItem.title}
-              </h3>
             </div>
           )}
         </div>
 
-        {/* Caption & Metadata */}
-        <div className="w-full mt-4 flex flex-col sm:flex-row sm:items-baseline justify-between text-slate-300 border-t border-white/15 pt-3 gap-2">
-          <div>
-            <h4 className="text-base font-serif font-medium text-white">
-              {currentItem.title}
-            </h4>
-          </div>
-          <div className="text-right text-xs font-mono text-slate-400 tracking-wider uppercase">
-            {currentItem.photographerCredit && (
-              <span className="block">Credit: {currentItem.photographerCredit}</span>
-            )}
-            <span className="block text-[11px] text-slate-500">
-              {currentIndex + 1} of {items.length}
-            </span>
-          </div>
+        {/* Minimal Counter - No subtitles or picture descriptions */}
+        <div className="w-full mt-3 flex justify-end text-slate-400 text-xs font-mono tracking-wider">
+          <span>
+            {currentIndex + 1} of {items.length}
+          </span>
         </div>
       </div>
     </div>

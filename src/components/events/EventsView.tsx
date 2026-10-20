@@ -1,6 +1,3 @@
-"use client";
-
-import { useState } from "react";
 import { EventItem } from "@/types";
 import { formatDate, formatEventTime } from "@/lib/utils/formatDate";
 import { StatusBadge } from "@/components/ui/StatusBadge";
@@ -9,67 +6,29 @@ import { MapPin, Calendar, ArrowUpRight, Info } from "lucide-react";
 
 interface EventsViewProps {
   upcomingEvents: EventItem[];
-  archivedEvents: EventItem[];
 }
 
 export function EventsView({
   upcomingEvents,
-  archivedEvents,
 }: EventsViewProps) {
-  const [activeTab, setActiveTab] = useState<"upcoming" | "past">("upcoming");
-
-  const eventsToShow = activeTab === "upcoming" ? upcomingEvents : archivedEvents;
-
   return (
     <div>
-      {/* Tab Switcher */}
-      <ScrollReveal direction="up" distance={12} duration={500}>
-        <div className="flex items-center gap-6 mb-12 border-b border-grains-border pb-4">
-          <button
-            type="button"
-            onClick={() => setActiveTab("upcoming")}
-            className={`text-sm font-mono tracking-widest uppercase pb-2 transition-all border-b-2 -mb-[18px] ${
-              activeTab === "upcoming"
-                ? "border-grains-red text-grains-black font-semibold"
-                : "border-transparent text-grains-muted hover:text-grains-black"
-            }`}
-          >
-            Upcoming Concerts ({upcomingEvents.length})
-          </button>
-          <button
-            type="button"
-            onClick={() => setActiveTab("past")}
-            className={`text-sm font-mono tracking-widest uppercase pb-2 transition-all border-b-2 -mb-[18px] ${
-              activeTab === "past"
-                ? "border-grains-red text-grains-black font-semibold"
-                : "border-transparent text-grains-muted hover:text-grains-black"
-            }`}
-          >
-            Past Performances Archive ({archivedEvents.length})
-          </button>
-        </div>
-      </ScrollReveal>
-
       {/* Events List */}
-      {eventsToShow.length === 0 ? (
+      {upcomingEvents.length === 0 ? (
         <ScrollReveal direction="up" distance={16} duration={550}>
           <div className="p-12 text-center bg-grains-cream border border-grains-border rounded-sm space-y-3 shadow-subtle">
             <Calendar className="w-8 h-8 text-grains-muted mx-auto" />
             <h3 className="text-lg font-serif text-grains-black">
-              {activeTab === "upcoming"
-                ? "No Upcoming Shows Currently Announced"
-                : "No Archived Shows Recorded Yet"}
+              No Upcoming Shows Currently Announced
             </h3>
             <p className="text-sm text-grains-text/75 font-sans max-w-md mx-auto">
-              {activeTab === "upcoming"
-                ? "Rehearsals are underway for the current semester. Concert dates and ticket releases are published here once finalized."
-                : "Past performance programs will appear here as concerts conclude."}
+              Rehearsals are underway for the current semester. Concert dates and ticket releases are published here once finalized.
             </p>
           </div>
         </ScrollReveal>
       ) : (
         <div className="space-y-6">
-          {eventsToShow.map((event, idx) => (
+          {upcomingEvents.map((event, idx) => (
             <ScrollReveal
               key={event._id}
               direction="up"
@@ -88,7 +47,7 @@ export function EventsView({
                   <p className="text-2xl sm:text-3xl font-serif text-grains-black font-normal">
                     {formatDate(event.startDate)}
                   </p>
-                  <p className="text-xs font-mono text-grains-muted">
+                  <p className="text-base sm:text-lg font-mono text-grains-black font-semibold mt-1">
                     {formatEventTime(event.startDate, event.endDate)}
                   </p>
                   <div className="pt-2">

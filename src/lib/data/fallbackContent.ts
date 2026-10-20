@@ -977,10 +977,10 @@ export const fallbackHomePage: HomePageData = {
       actionText: "Meet the Voices",
     },
     {
-      title: "Living Timeline",
-      description: "Over five decades of performance programs, archival photos, and university milestones since 1968.",
-      linkUrl: "/history",
-      actionText: "Explore Archive",
+      title: "Photo Gallery",
+      description: "Moments from our concerts, campus appearances, and travels representing NC State.",
+      linkUrl: "/gallery",
+      actionText: "View Gallery",
     },
     {
       title: "Active Repertoire",
@@ -1008,7 +1008,7 @@ export const fallbackHomePage: HomePageData = {
   archivalNarrative:
     "Founded in 1968, Grains of Time is North Carolina’s oldest collegiate a cappella group. With over 50 years of history, we pride ourselves on our legacy as a group and our time together representing NC State.\n\nWe host multiple concerts at NC State each year, in addition to performing at various events across campus. Alongside these performances, we have the pleasure to compete annually in the International Championship of Collegiate A Cappella (ICCA).\n\nBeyond campus, we stay closely connected to our local community, performing regularly throughout Raleigh and across North Carolina.\n\nWhether you’re a student, alumni, or organization looking to connect, reach out to us! We would love to hear from you!",
   archivalImage: {
-    imageUrl: "/GrainsPhotos/MediaDay2026/IMG_4839.jpg",
+    imageUrl: "/GrainsPhotos/Vertical.jpg",
     alt: "Grains of Time ensemble at the NC State Memorial Belltower",
     credit: "Grains of Time Media",
   },

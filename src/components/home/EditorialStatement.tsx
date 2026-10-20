@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Users, Calendar, Clock, Music, ArrowRight, LucideIcon } from "lucide-react";
+import { Users, Calendar, Camera, Music, ArrowRight, LucideIcon } from "lucide-react";
 import { HomePageData } from "@/types";
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
 
@@ -20,10 +20,10 @@ export function EditorialStatement({ content }: EditorialStatementProps) {
   const getIconForLink = (url?: string, index: number = 0): LucideIcon => {
     if (!url) return Users;
     if (url.includes("member")) return Users;
-    if (url.includes("history") || url.includes("timeline")) return Clock;
+    if (url.includes("gallery") || url.includes("photo")) return Camera;
     if (url.includes("repertoire") || url.includes("music")) return Music;
     if (url.includes("event") || url.includes("calendar")) return Calendar;
-    const fallbackIcons = [Users, Clock, Music, Calendar];
+    const fallbackIcons = [Users, Camera, Music, Calendar];
     return fallbackIcons[index % fallbackIcons.length];
   };
 
@@ -36,11 +36,11 @@ export function EditorialStatement({ content }: EditorialStatementProps) {
       actionText: "Meet the Voices",
     },
     {
-      title: "Living Timeline",
+      title: "Photo Gallery",
       description:
-        "Over five decades of performance programs, archival photos, and university milestones since 1968.",
-      href: "/history",
-      actionText: "Explore Archive",
+        "Moments from our concerts, campus appearances, and travels representing NC State.",
+      href: "/gallery",
+      actionText: "View Gallery",
     },
     {
       title: "Active Repertoire",

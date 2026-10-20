@@ -2,12 +2,12 @@ import type { Metadata } from "next";
 import { getSiteSettings } from "@/lib/sanity/queries";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
-import { ArrowUpRight, ShoppingBag, ExternalLink, ShieldCheck, HeartHandshake } from "lucide-react";
+import { ArrowUpRight, ShoppingBag, ExternalLink, HeartHandshake } from "lucide-react";
 
 export const metadata: Metadata = {
   title: "Official Merchandise",
   description:
-    "Official Grains of Time apparel, merchandise, and collegiate gear supporting NC State's premier all-male a cappella group.",
+    "Official Grains of Time apparel and merchandise supporting NC State's premier all-male a cappella group.",
 };
 
 export const revalidate = 60;
@@ -40,10 +40,10 @@ export default async function MerchPage() {
                 </span>
               </div>
               <h3 className="text-2xl sm:text-3xl font-serif text-grains-black">
-                Ladies in Red & Grains of Time Collection
+                Grains of Time and Ladies in Red Collection
               </h3>
               <p className="text-sm text-grains-text/80 font-sans max-w-xl leading-relaxed">
-                Our merchandise is hosted on the official Ladies in Red Shopify store. Proceeds directly fund student travel, recording production, sheet music arrangements, and showcase staging.
+                Our merchandise is hosted on the official Ladies in Red Shopify store. Proceeds directly fund performances, recording production, and student travel.
               </p>
             </div>
 
@@ -59,24 +59,14 @@ export default async function MerchPage() {
           </div>
 
           {/* Security / Safe External Link Notice */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 text-xs text-grains-text/80 font-sans">
-            <div className="p-5 bg-grains-cream border border-grains-border rounded-sm space-y-2 shadow-subtle">
+          <div className="text-xs text-grains-text/80 font-sans">
+            <div className="p-5 bg-grains-cream border border-grains-border rounded-sm space-y-2 shadow-subtle max-w-xl">
               <div className="flex items-center gap-2 text-grains-black font-mono uppercase tracking-wider text-[11px] font-semibold">
                 <ExternalLink className="w-3.5 h-3.5 text-grains-red" />
                 <span>External Store Notice</span>
               </div>
               <p className="leading-relaxed">
                 Clicking &ldquo;Visit Online Store&rdquo; opens Shopify in a new tab. Orders and payments are handled securely through Shopify&apos;s encrypted checkout.
-              </p>
-            </div>
-
-            <div className="p-5 bg-grains-cream border border-grains-border rounded-sm space-y-2 shadow-subtle">
-              <div className="flex items-center gap-2 text-grains-black font-mono uppercase tracking-wider text-[11px] font-semibold">
-                <ShieldCheck className="w-3.5 h-3.5 text-emerald-700" />
-                <span>Direct Ensemble Support</span>
-              </div>
-              <p className="leading-relaxed">
-                Every purchase directly benefits active undergraduate vocalists at NC State, making regional tours and album recording possible.
               </p>
             </div>
           </div>
@@ -98,7 +88,7 @@ export default async function MerchPage() {
                 Official GoFundMe Campaign
               </h3>
               <p className="text-sm text-grains-text/80 font-sans max-w-xl leading-relaxed">
-                Support Grains of Time directly! Your contributions fund collegiate competition travel, professional recording production, masterclasses, and vocal arrangements for our student ensemble.
+                Support Grains of Time by helping us cover the costs of hosting concerts, recording new music, and keeping our traditions alive. Your contributions help make these opportunities possible, allowing us to continue doing what we love: performing at NC State and beyond.
               </p>
             </div>
 

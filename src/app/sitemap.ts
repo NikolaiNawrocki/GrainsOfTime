@@ -8,7 +8,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/about",
     "/members",
     "/events",
-    "/history",
     "/repertoire",
     "/gallery",
     "/merch",

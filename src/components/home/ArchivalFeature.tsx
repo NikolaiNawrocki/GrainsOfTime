@@ -30,7 +30,7 @@ export function ArchivalFeature({ content, settings }: ArchivalFeatureProps) {
             <ScrollReveal direction="left" distance={28} duration={800}>
               <EditorialImage
                 image={content?.archivalImage}
-                src={content?.archivalImage?.imageUrl || "/GrainsPhotos/MediaDay2026/IMG_4839.jpg"}
+                src={content?.archivalImage?.imageUrl || "/GrainsPhotos/Vertical.jpg"}
                 aspectRatio="3/4"
                 alt="Grains of Time ensemble standing proudly at the NC State Memorial Belltower"
                 credit="Grains of Time Media"

@@ -5,9 +5,9 @@ import { SectionHeading } from "@/components/ui/SectionHeading";
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
 
 export const metadata: Metadata = {
-  title: "Photo Archive & Visual Dispatch",
+  title: "Gallery",
   description:
-    "Explore the visual archive of Grains of Time: live concerts at Stewart Theatre, rehearsals, backstage moments, and historical tours.",
+    "Explore photos of Grains of Time: live concerts at Stewart Theatre, rehearsals, backstage moments, and tours.",
 };
 
 export const revalidate = 60;

@@ -6,9 +6,9 @@ import { ScrollReveal } from "@/components/ui/ScrollReveal";
 import { ArrowUpRight } from "lucide-react";
 
 export const metadata: Metadata = {
-  title: "Repertoire & Musical Arrangements",
+  title: "Grains Repertoire",
   description:
-    "Explore current concert arrangements and historical charts performed by Grains of Time at NC State.",
+    "Explore current concert arrangements and charts performed by Grains of Time at NC State.",
 };
 
 export const revalidate = 60;
@@ -28,7 +28,7 @@ export default async function RepertoirePage() {
       <ScrollReveal direction="up" distance={16} duration={600}>
         <div className="mb-14 flex flex-col md:flex-row md:items-end justify-between gap-6 pb-6 border-b border-grains-border">
           <SectionHeading
-            title="Arrangements & Setlists"
+            title="Grains Repertoire"
           />
 
           <a

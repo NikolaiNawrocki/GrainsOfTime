@@ -33,21 +33,12 @@ export function Footer({ settings }: FooterProps) {
             <p className="text-xs font-mono tracking-[0.2em] text-slate-400 uppercase">
               {settings?.locationAffiliation || "North Carolina State University • Raleigh, NC"}
             </p>
-            <p className="text-sm text-slate-300/90 font-sans max-w-sm leading-relaxed">
-              Founded in 1968. A living archive of sound, brotherhood, and collegiate vocal music. Representing the Wolfpack on campus and nationwide.
-            </p>
-            <div className="pt-2">
-              <span className="inline-flex items-center gap-1.5 text-xs font-mono text-slate-400 uppercase tracking-wider">
-                <span className="w-2 h-2 rounded-full bg-emerald-400" />
-                Active Ensemble • Est. 1968
-              </span>
-            </div>
           </div>
 
-          {/* Column 2: Living Archive */}
+          {/* Column 2: Ensemble Links */}
           <div className="space-y-3">
             <h3 className="text-xs font-mono uppercase tracking-[0.25em] text-white font-semibold">
-              The Archive
+              The Ensemble
             </h3>
             <ul className="space-y-2.5 text-sm font-sans">
               <li>
@@ -61,18 +52,13 @@ export function Footer({ settings }: FooterProps) {
                 </Link>
               </li>
               <li>
-                <Link href="/history" className="hover:text-white transition-colors text-slate-300/80">
-                  Living Timeline (1968–Now)
-                </Link>
-              </li>
-              <li>
                 <Link href="/repertoire" className="hover:text-white transition-colors text-slate-300/80">
                   Repertoire & Arrangements
                 </Link>
               </li>
               <li>
                 <Link href="/gallery" className="hover:text-white transition-colors text-slate-300/80">
-                  Photo Archive
+                  Photo Gallery
                 </Link>
               </li>
             </ul>

@@ -98,31 +98,14 @@ export function GalleryGrid({ items }: GalleryGridProps) {
                     <div className="w-12 h-12 rounded-full border border-grains-border bg-white flex items-center justify-center mb-2 group-hover:border-grains-red/40 transition-colors">
                       <Camera className="w-6 h-6 text-grains-muted group-hover:text-grains-black transition-colors" />
                     </div>
-                    <span className="text-[10px] font-mono tracking-widest text-grains-black uppercase border border-grains-border bg-white/80 px-2 py-0.5 rounded-sm">
-                      Photo Archive Frame
-                    </span>
-                    <p className="text-xs font-serif text-grains-black mt-1 max-w-xs line-clamp-2">
-                      {item.title}
-                    </p>
                   </div>
                 )}
 
-                {/* Hover overlay gradient in Deep Black */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
-
-                {/* Caption & Credit on Hover */}
-                <div className="relative z-10 space-y-1 transform translate-y-2 group-hover:translate-y-0 transition-transform duration-300 opacity-90">
-                  <div className="flex items-center justify-between">
-                    <h3 className="text-sm font-serif text-white font-medium drop-shadow-sm">
-                      {item.title}
-                    </h3>
-                    <Maximize2 className="w-3.5 h-3.5 text-slate-300 group-hover:text-white transition-colors shrink-0" />
+                {/* Hover overlay with expand button only - no subtitles or picture descriptions */}
+                <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none flex items-end justify-end p-4">
+                  <div className="w-8 h-8 rounded-full bg-black/60 backdrop-blur-sm flex items-center justify-center text-white">
+                    <Maximize2 className="w-4 h-4" />
                   </div>
-                  {credit && (
-                    <p className="text-[10px] font-mono uppercase tracking-wider text-slate-300 drop-shadow-sm">
-                      Photo: {credit}
-                    </p>
-                  )}
                 </div>
               </div>
             </ScrollReveal>
