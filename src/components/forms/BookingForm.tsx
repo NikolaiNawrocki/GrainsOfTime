@@ -84,7 +84,6 @@ export function BookingForm() {
             aria-required="true"
             aria-invalid={Boolean(state.errors?.name)}
             aria-describedby={state.errors?.name ? "name-error" : undefined}
-            placeholder="Jane Doe"
             className="w-full bg-white border border-grains-border rounded-sm px-4 py-2.5 text-sm text-grains-text placeholder-grains-muted focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-grains-red"
           />
           {state.errors?.name && (
@@ -105,7 +104,6 @@ export function BookingForm() {
             type="text"
             id="organization"
             name="organization"
-            placeholder="NC State Department, Wedding, Festival"
             className="w-full bg-white border border-grains-border rounded-sm px-4 py-2.5 text-sm text-grains-text placeholder-grains-muted focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-grains-red"
           />
         </div>
@@ -128,7 +126,6 @@ export function BookingForm() {
             aria-required="true"
             aria-invalid={Boolean(state.errors?.email)}
             aria-describedby={state.errors?.email ? "email-error" : undefined}
-            placeholder="jane@example.com"
             className="w-full bg-white border border-grains-border rounded-sm px-4 py-2.5 text-sm text-grains-text placeholder-grains-muted focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-grains-red"
           />
           {state.errors?.email && (
@@ -149,7 +146,6 @@ export function BookingForm() {
             type="tel"
             id="phone"
             name="phone"
-            placeholder="(919) 555-0199"
             className="w-full bg-white border border-grains-border rounded-sm px-4 py-2.5 text-sm text-grains-text placeholder-grains-muted focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-grains-red"
           />
         </div>
@@ -170,7 +166,6 @@ export function BookingForm() {
             name="eventDate"
             required
             aria-required="true"
-            placeholder="e.g. October 24, 2026 or Fall Semester"
             className="w-full bg-white border border-grains-border rounded-sm px-4 py-2.5 text-sm text-grains-text placeholder-grains-muted focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-grains-red"
           />
           {state.errors?.eventDate && (
@@ -193,7 +188,6 @@ export function BookingForm() {
             name="venue"
             required
             aria-required="true"
-            placeholder="Talley Student Union, Raleigh, NC"
             className="w-full bg-white border border-grains-border rounded-sm px-4 py-2.5 text-sm text-grains-text placeholder-grains-muted focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-grains-red"
           />
           {state.errors?.venue && (
@@ -266,7 +260,6 @@ export function BookingForm() {
           rows={4}
           required
           aria-required="true"
-          placeholder="Please describe the performance duration, desired repertoire style, sound system availability, and any specific requests..."
           className="w-full bg-white border border-grains-border rounded-sm px-4 py-2.5 text-sm text-grains-text placeholder-grains-muted focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-grains-red"
         />
         {state.errors?.message && (
