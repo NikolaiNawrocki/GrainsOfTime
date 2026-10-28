@@ -10,6 +10,7 @@ interface EditorialImageProps {
   aspectRatio?: "16/9" | "4/5" | "1/1" | "3/2" | "21/9" | "2/3" | "3/4";
   caption?: string;
   credit?: string;
+  hideCredit?: boolean;
   placeholderLabel?: string;
   priority?: boolean;
   className?: string;
@@ -23,6 +24,7 @@ export function EditorialImage({
   alt,
   aspectRatio = "16/9",
   credit,
+  hideCredit = false,
   placeholderLabel = "Grains of Time Archive",
   priority = false,
   className,
@@ -31,7 +33,7 @@ export function EditorialImage({
 }: EditorialImageProps) {
   const sanityUrl = image?.asset ? urlForImage(image)?.url() : null;
   const imageUrl = src || image?.imageUrl || sanityUrl;
-  const displayCredit = credit || image?.credit;
+  const displayCredit = hideCredit ? null : (credit || image?.credit);
 
   const aspectClass = {
     "16/9": "aspect-video",

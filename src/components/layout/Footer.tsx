@@ -9,6 +9,8 @@ interface FooterProps {
 
 export function Footer({ settings }: FooterProps) {
   const social = settings?.socialLinks;
+  const rawEmail = settings?.contactEmail;
+  const contactEmail = (!rawEmail || rawEmail.includes("grainsoftimencsu")) ? "ncstategrains@gmail.com" : rawEmail;
 
   return (
     <footer className="w-full bg-grains-black border-t border-grains-border text-slate-300">
@@ -43,17 +45,17 @@ export function Footer({ settings }: FooterProps) {
             <ul className="space-y-2.5 text-sm font-sans">
               <li>
                 <Link href="/about" className="hover:text-white transition-colors text-slate-300/80">
-                  About the Group
+                  About Us
                 </Link>
               </li>
               <li>
                 <Link href="/members" className="hover:text-white transition-colors text-slate-300/80">
-                  Current Ensemble
+                  Current Grains
                 </Link>
               </li>
               <li>
                 <Link href="/repertoire" className="hover:text-white transition-colors text-slate-300/80">
-                  Repertoire & Arrangements
+                  Repertoire
                 </Link>
               </li>
               <li>
@@ -88,7 +90,7 @@ export function Footer({ settings }: FooterProps) {
               </li>
               <li>
                 <Link href="/book" className="hover:text-white transition-colors text-slate-300/80">
-                  Book the Ensemble
+                  Book the Grains
                 </Link>
               </li>
               <li>
@@ -199,10 +201,10 @@ export function Footer({ settings }: FooterProps) {
               )}
               <li>
                 <a
-                  href={`mailto:${settings?.contactEmail || "ncstategrains@gmail.com"}`}
+                  href={`mailto:${contactEmail}`}
                   className="hover:text-white transition-colors text-slate-300/80"
                 >
-                  {settings?.contactEmail || "ncstategrains@gmail.com"}
+                  {contactEmail}
                 </a>
               </li>
               <li className="pt-2">

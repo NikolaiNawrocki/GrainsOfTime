@@ -19,7 +19,8 @@ const defaultParagraphs = [
 export function ArchivalFeature({ content, settings }: ArchivalFeatureProps) {
   const eyebrow = "About Grains of Time";
   const heading = content?.archivalHeading || "Singing Since 1968";
-  const contactEmail = settings?.contactEmail || "ncstategrains@gmail.com";
+  const rawEmail = settings?.contactEmail;
+  const contactEmail = (!rawEmail || rawEmail.includes("grainsoftimencsu")) ? "ncstategrains@gmail.com" : rawEmail;
 
   return (
     <section className="py-20 sm:py-28 border-b border-grains-border bg-grains-white overflow-hidden">
@@ -33,7 +34,7 @@ export function ArchivalFeature({ content, settings }: ArchivalFeatureProps) {
                 src={content?.archivalImage?.imageUrl || "/GrainsPhotos/Vertical.jpg"}
                 aspectRatio="3/4"
                 alt="Grains of Time ensemble standing proudly at the NC State Memorial Belltower"
-                credit="Grains of Time Media"
+                hideCredit
                 containerClassName="shadow-editorial hover:shadow-accent transition-shadow duration-300 max-w-md mx-auto"
               />
             </ScrollReveal>
@@ -47,7 +48,7 @@ export function ArchivalFeature({ content, settings }: ArchivalFeatureProps) {
                 title={heading}
               />
 
-              <div className="space-y-4 text-sm sm:text-base text-grains-text/85 font-sans leading-relaxed pt-2">
+              <div className="space-y-4 text-sm sm:text-base text-grains-text/85 font-sans leading-relaxed pt-6">
                 {defaultParagraphs.map((para, idx) => (
                   <p key={idx}>{para}</p>
                 ))}

@@ -47,7 +47,7 @@ export function HeroSection({ settings, content }: HeroSectionProps) {
                 aspectRatio="16/9"
                 alt={content?.heroImage?.alt || "Grains of Time live concert performance at Stewart Theatre"}
                 placeholderLabel="Official Concert Photography • Stewart Theatre"
-                credit={content?.heroImage?.credit || "Grains of Time Media"}
+                hideCredit
                 priority
                 containerClassName="shadow-editorial"
               />

@@ -2,75 +2,51 @@ import type { Metadata } from "next";
 import { BookingForm } from "@/components/forms/BookingForm";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
-import { Mic, Volume2, Clock, HelpCircle, LucideIcon } from "lucide-react";
+import { Mic, Clock, HelpCircle } from "lucide-react";
 import { getSiteSettings } from "@/lib/sanity/queries";
 
 export const revalidate = 60;
 
 export const metadata: Metadata = {
-  title: "Book the Ensemble | Inquiries",
+  title: "Book the Grains | Inquiries",
   description:
-    "Hire Grains of Time for your university event, corporate reception, private celebration, or high school vocal masterclass.",
+    "Hire Grains of Time for your university event, corporate reception, private celebration, or vocal showcase.",
 };
 
 export default async function BookPage() {
   const settings = await getSiteSettings();
 
-  const heading = settings?.bookingHeading || "Bring the Sound to Your Event";
-  const subtitle =
-    settings?.bookingSubtitle ||
-    "From NC State university convocations to private celebrations and masterclasses, Grains of Time brings unforgettable vocal energy to every stage.";
+  const heading = "Bring the Music to Your Event";
 
-  const guidelineIcons: LucideIcon[] = [Volume2, Mic, Clock];
-
-  const defaultGuidelines = [
+  const performanceDetails = [
     {
-      title: "Acoustics & Sound",
+      icon: Mic,
+      title: "Sound and Equipment",
       description:
-        "For small intimate rooms (under 75 guests), we can perform completely unamplified. For auditoriums, gymnasiums, or outdoor events, sound reinforcement (at least 3–5 wireless vocal mics or an area choir array) is strongly recommended.",
+        "We can perform without microphones in smaller spaces. For larger or outdoor venues, we recommend at least 3-5 microphones or a choir mic setup. For full concerts, our preferred setup includes 8-12 wireless handheld microphones, a dedicated bass/beatbox microphone, and stage monitors.",
     },
     {
-      title: "Microphone Setup",
-      description:
-        "For full collegiate-level amplified sets, our ideal configuration is 8–12 handheld wireless microphones and 1 dedicated bass/beatbox microphone with dedicated stage monitors.",
-    },
-    {
+      icon: Clock,
       title: "Advance Notice",
       description:
-        "Because all members are full-time undergraduate students at NC State, we kindly request inquiries at least 3–4 weeks prior to your target event date, especially around midterms and finals periods.",
+        "As full-time NC State students, we kindly ask that performance requests be submitted at least 3-4 weeks in advance.",
     },
   ];
 
-  const rawGuidelines =
-    settings?.bookingGuidelines && settings.bookingGuidelines.length > 0
-      ? settings.bookingGuidelines
-      : defaultGuidelines;
-
-  const technicalGuidelines = rawGuidelines.map((item, idx) => ({
-    icon: guidelineIcons[idx % guidelineIcons.length],
-    title: item.title,
-    description: item.description,
-  }));
-
-  const defaultFaqs = [
+  const faqs = [
     {
       q: "What styles of music does Grains of Time perform?",
-      a: "Our setlist encompasses contemporary pop hits, classic rock staples, R&B grooves, traditional NC State anthems, and seasonal holiday favorites—all arranged specifically for our 5-part vocal ensemble.",
+      a: "Our repertoire includes contemporary pop, classic rock, traditional NC State songs, and holiday favorites, all arranged for our five-part vocal ensemble.",
     },
     {
       q: "How long is a typical performance?",
-      a: "We accommodate performances ranging from a single national anthem or alma mater opener (5–10 minutes) up to a full two-act concert showcase (45–75 minutes).",
+      a: "A performance can range from a short 5-10 minute appearance to a full 45-75 minute concert, depending on the event.",
     },
     {
       q: "Does Grains of Time travel outside of the Triangle?",
-      a: "Yes! While our primary performance hub is Raleigh and the Research Triangle, we regularly travel across North Carolina and the East Coast for festivals, high school clinics, and special events.",
+      a: "Yes! While we're based in Raleigh, we regularly travel throughout North Carolina and beyond for performances.",
     },
   ];
-
-  const faqs =
-    settings?.bookingFaqs && settings.bookingFaqs.length > 0
-      ? settings.bookingFaqs
-      : defaultFaqs;
 
   return (
     <div className="py-16 sm:py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 bg-grains-white">
@@ -92,16 +68,16 @@ export default async function BookPage() {
           </ScrollReveal>
         </div>
 
-        {/* Right Column: Technical Rider & FAQs */}
+        {/* Right Column: Performance Details, FAQs, and Additional Contact */}
         <div className="lg:col-span-5 space-y-8">
-          {/* Performance Guidelines Card */}
+          {/* Box 1: Booking & Performance Details Card */}
           <ScrollReveal direction="up" distance={20} duration={650} delay={100}>
             <div className="p-6 sm:p-8 bg-grains-cream border border-grains-border rounded-sm space-y-6 shadow-subtle">
               <h3 className="text-xs font-mono uppercase tracking-[0.25em] text-grains-black font-semibold">
-                Performance Guidelines & Rider
+                Booking & Performance Details
               </h3>
               <div className="space-y-5">
-                {technicalGuidelines.map((item) => {
+                {performanceDetails.map((item) => {
                   const Icon = item.icon;
                   return (
                     <div key={item.title} className="flex gap-4">
@@ -123,7 +99,7 @@ export default async function BookPage() {
             </div>
           </ScrollReveal>
 
-          {/* Quick FAQs */}
+          {/* Box 2: Frequently Asked Questions */}
           <ScrollReveal direction="up" distance={20} duration={650} delay={180}>
             <div className="p-6 sm:p-8 bg-grains-cream border border-grains-border rounded-sm space-y-6 shadow-subtle">
               <div className="flex items-center gap-2 text-xs font-mono uppercase tracking-[0.25em] text-grains-black font-semibold">
@@ -142,6 +118,22 @@ export default async function BookPage() {
                   </div>
                 ))}
               </div>
+            </div>
+          </ScrollReveal>
+
+          {/* Box 3: Additional Questions Box */}
+          <ScrollReveal direction="up" distance={20} duration={650} delay={240}>
+            <div className="p-6 sm:p-8 bg-grains-cream border border-grains-border rounded-sm shadow-subtle">
+              <p className="text-xs sm:text-sm text-grains-text/85 font-sans leading-relaxed">
+                For any additional questions, feel free to contact us at{" "}
+                <a
+                  href="mailto:ncstategrains@gmail.com"
+                  className="text-grains-red hover:underline font-medium"
+                >
+                  ncstategrains@gmail.com
+                </a>{" "}
+                or through any of our social media pages!
+              </p>
             </div>
           </ScrollReveal>
         </div>

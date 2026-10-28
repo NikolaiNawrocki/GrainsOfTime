@@ -167,7 +167,7 @@ export const fallbackMembers: Member[] = [
     name: "Aaron Simpson",
     slug: "aaron-simpson",
     vocalPart: "Baritone",
-    status: "active",
+    status: "alumni",
     order: 7,
     graduationYear: "Senior",
     major: "Mechanical Engineering",
@@ -963,7 +963,6 @@ export const fallbackHomePage: HomePageData = {
   heroImage: {
     imageUrl: "/GrainsPhotos/2026-Grains-Concert/GrainsOpenPhoto.jpg",
     alt: "Grains of Time live concert performance at Stewart Theatre",
-    credit: "Grains of Time Media",
   },
   pullQuoteText:
     "No instruments. Just brotherhood, acoustic discipline, and arrangements forged over fifty-plus years in Raleigh.",
@@ -971,7 +970,7 @@ export const fallbackHomePage: HomePageData = {
   pullQuoteEyebrow: "Tradition & Experimentation",
   quickLinks: [
     {
-      title: "Current Ensemble",
+      title: "Current Grains",
       description: "Explore the active vocal roster across Tenor 1, Tenor 2, Baritone, Bass, and Vocal Percussion.",
       linkUrl: "/members",
       actionText: "Meet the Voices",
@@ -1010,7 +1009,6 @@ export const fallbackHomePage: HomePageData = {
   archivalImage: {
     imageUrl: "/GrainsPhotos/Vertical.jpg",
     alt: "Grains of Time ensemble at the NC State Memorial Belltower",
-    credit: "Grains of Time Media",
   },
   archivalStatFounded: 1968,
   archivalStatDecades: "5+",

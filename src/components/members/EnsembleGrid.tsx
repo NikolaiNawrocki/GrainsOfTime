@@ -30,10 +30,10 @@ export function getMemberGradeLevel(member: Member): GradeLevel {
   const yearMatch = grad.match(/\d{4}/);
   if (yearMatch) {
     const yr = parseInt(yearMatch[0], 10);
-    if (yr <= 2026) return "Senior";
-    if (yr === 2027) return "Junior";
-    if (yr === 2028) return "Sophomore";
-    if (yr >= 2029) return "Freshman";
+    if (yr <= 2027) return "Senior";
+    if (yr === 2028) return "Junior";
+    if (yr === 2029) return "Sophomore";
+    if (yr >= 2030) return "Freshman";
   }
 
   return "Other";
@@ -80,40 +80,66 @@ export function getMemberImageUrl(member: Member): string | null {
 
 // Explicit ordering requirement:
 // Exec position, and then grade level after:
-// Davis, Zeke, Max, Jude, Zaza, Henry, Aaron, Jon, Brock, Caleb, Zack, Landon, Nikolai, Noah, Sid
+// Davis, Zeke, Max, Jude, Zaza, Henry, Jon, Brock, Caleb, Zack, Landon, Nikolai, Noah, Sid
 const ORDERED_NAMES: Record<string, number> = {
   davis: 1,
+  churn: 1,
   zeke: 2,
+  szilagyi: 2,
   max: 3,
+  haugh: 3,
   jude: 4,
+  kasti: 4,
   zaza: 5,
   isaac: 5,
+  casazza: 5,
   henry: 6,
-  aaron: 7,
-  jon: 8,
-  jonathan: 8,
-  johnathan: 8,
-  brock: 9,
-  caleb: 10,
-  zack: 11,
-  zackary: 11,
-  landon: 12,
-  nikolai: 13,
-  noah: 14,
-  sid: 15,
+  mitchell: 6,
+  jon: 7,
+  jonathan: 7,
+  johnathan: 7,
+  crocker: 7,
+  brock: 8,
+  reece: 8,
+  caleb: 9,
+  hofheinz: 9,
+  zack: 10,
+  zackary: 10,
+  mendoza: 10,
+  landon: 11,
+  finley: 11,
+  nikolai: 12,
+  nawrocki: 12,
+  noah: 13,
+  hamilton: 13,
+  sid: 14,
+  zaveri: 14,
 };
 
 function getMemberOrderScore(member: Member): number {
   const parts = member.name.trim().toLowerCase().split(/\s+/);
   const firstName = parts[0] || "";
   const lastName = parts[parts.length - 1] || "";
+  const fullName = member.name.trim().toLowerCase();
 
-  if (ORDERED_NAMES[firstName] !== undefined) {
-    return ORDERED_NAMES[firstName];
-  }
-  if (lastName === "casazza") {
-    return 5;
-  }
+  if (firstName === "davis" || lastName === "churn") return 1;
+  if (firstName === "zeke" || lastName === "szilagyi") return 2;
+  if (firstName === "max" || lastName === "haugh") return 3;
+  if (firstName === "jude" || lastName === "kasti") return 4;
+  if (firstName === "isaac" || firstName === "zaza" || lastName === "casazza") return 5;
+  if (firstName === "henry" || lastName === "mitchell") return 6;
+  if (firstName === "jon" || firstName === "jonathan" || firstName === "johnathan" || lastName === "crocker") return 7;
+  if (firstName === "brock" || lastName === "reece") return 8;
+  if (firstName === "caleb" || lastName === "hofheinz") return 9;
+  if (firstName === "zack" || firstName === "zackary" || lastName === "mendoza") return 10;
+  if (firstName === "landon" || lastName === "finley") return 11;
+  if (firstName === "nikolai" || lastName === "nawrocki") return 12;
+  if (firstName === "noah" || lastName === "hamilton") return 13;
+  if (firstName === "sid" || lastName === "zaveri") return 14;
+
+  if (ORDERED_NAMES[fullName] !== undefined) return ORDERED_NAMES[fullName];
+  if (ORDERED_NAMES[firstName] !== undefined) return ORDERED_NAMES[firstName];
+  if (ORDERED_NAMES[lastName] !== undefined) return ORDERED_NAMES[lastName];
 
   if (member.leadershipRole) {
     return 6.5 + (member.order ?? 99) * 0.01;
@@ -189,7 +215,7 @@ export function EnsembleGrid({ members }: EnsembleGridProps) {
       result.push({
         id: "seniors",
         title: "Seniors",
-        description: "Class of 2026",
+        description: "Class of 2027",
         members: seniorMembers,
       });
     }
@@ -197,7 +223,7 @@ export function EnsembleGrid({ members }: EnsembleGridProps) {
       result.push({
         id: "juniors",
         title: "Juniors",
-        description: "Class of 2027",
+        description: "Class of 2028",
         members: juniorMembers,
       });
     }
@@ -205,7 +231,7 @@ export function EnsembleGrid({ members }: EnsembleGridProps) {
       result.push({
         id: "sophomores",
         title: "Sophomores",
-        description: "Class of 2028",
+        description: "Class of 2029",
         members: sophomoreMembers,
       });
     }
@@ -213,7 +239,7 @@ export function EnsembleGrid({ members }: EnsembleGridProps) {
       result.push({
         id: "freshmen",
         title: "Freshmen",
-        description: "Class of 2029",
+        description: "Class of 2030",
         members: freshmanMembers,
       });
     }
@@ -228,21 +254,94 @@ export function EnsembleGrid({ members }: EnsembleGridProps) {
     return result;
   }, [sortedMembers]);
 
-  // Build filter tabs dynamically from available groups
+  // Build filter tabs
   const filterOptions = useMemo(() => {
     return [
       { id: "All", label: "All" },
-      ...groups.map((g) => ({ id: g.id, label: g.title })),
+      { id: "exec", label: "Executive Board" },
+      { id: "seniors", label: "Seniors" },
+      { id: "juniors", label: "Juniors" },
+      { id: "sophomores", label: "Sophomores" },
+      { id: "freshmen", label: "Freshmen" },
     ];
-  }, [groups]);
+  }, []);
 
-  // Determine groups to render based on active filter
+  // Determine groups to render based on active filter.
+  // When a grade level is selected, members of exec belonging to that grade level are also included.
   const displayedGroups = useMemo(() => {
     if (selectedFilter === "All") {
       return groups;
     }
+
+    if (selectedFilter === "exec") {
+      const execMembers = sortedMembers.filter((m) => !!m.leadershipRole);
+      return [
+        {
+          id: "exec",
+          title: "Executive Board",
+          description: "Student Leadership",
+          members: execMembers,
+        },
+      ];
+    }
+
+    if (selectedFilter === "seniors") {
+      // User note: "still just include Jon in this"
+      const seniors = sortedMembers.filter((m) => {
+        const first = m.name.trim().toLowerCase().split(/\s+/)[0];
+        const last = m.name.trim().toLowerCase().split(/\s+/).slice(-1)[0];
+        return first === "jon" || first === "jonathan" || first === "johnathan" || last === "crocker";
+      });
+      return [
+        {
+          id: "seniors",
+          title: "Seniors",
+          description: "Class of 2027",
+          members: seniors,
+        },
+      ];
+    }
+
+    if (selectedFilter === "juniors") {
+      // Includes both executive board juniors (e.g. Davis, Zeke, Max) and non-exec juniors
+      const juniors = sortedMembers.filter((m) => getMemberGradeLevel(m) === "Junior");
+      return [
+        {
+          id: "juniors",
+          title: "Juniors",
+          description: "Class of 2028",
+          members: juniors,
+        },
+      ];
+    }
+
+    if (selectedFilter === "sophomores") {
+      // Includes executive board sophomores (Jude, Isaac)
+      const sophomores = sortedMembers.filter((m) => getMemberGradeLevel(m) === "Sophomore");
+      return [
+        {
+          id: "sophomores",
+          title: "Sophomores",
+          description: "Class of 2029",
+          members: sophomores,
+        },
+      ];
+    }
+
+    if (selectedFilter === "freshmen") {
+      const freshmen = sortedMembers.filter((m) => getMemberGradeLevel(m) === "Freshman");
+      return [
+        {
+          id: "freshmen",
+          title: "Freshmen",
+          description: "Class of 2030",
+          members: freshmen,
+        },
+      ];
+    }
+
     return groups.filter((g) => g.id === selectedFilter);
-  }, [groups, selectedFilter]);
+  }, [groups, selectedFilter, sortedMembers]);
 
   return (
     <div>
@@ -441,15 +540,28 @@ export function EnsembleGrid({ members }: EnsembleGridProps) {
               )}
 
               <div className="sm:col-span-7 space-y-4">
-                <div className="flex items-center justify-between pb-3 border-b border-grains-border text-xs font-mono uppercase tracking-widest text-grains-muted">
-                  <span className="text-grains-red font-semibold">
-                    {activeMember.vocalPart}
-                  </span>
-                  <span>
+                {/* Placement swapped: Grade level bolded on left, voice part on right */}
+                <div className="flex items-center justify-between pb-3 border-b border-grains-border text-xs font-mono uppercase tracking-widest">
+                  <span className="font-bold text-grains-black">
                     {modalGradeLevel.toUpperCase()}
-                    {activeMember.graduationYear && /^\d{4}$/.test(String(activeMember.graduationYear))
-                      ? ` • '${String(activeMember.graduationYear).slice(-2)}`
-                      : ""}
+                    {(() => {
+                      const yearMatch = String(activeMember.graduationYear || "").match(/\d{4}/);
+                      const yr = yearMatch
+                        ? yearMatch[0].slice(-2)
+                        : modalGradeLevel === "Senior"
+                        ? "27"
+                        : modalGradeLevel === "Junior"
+                        ? "28"
+                        : modalGradeLevel === "Sophomore"
+                        ? "29"
+                        : modalGradeLevel === "Freshman"
+                        ? "30"
+                        : "";
+                      return yr ? ` • '${yr}` : "";
+                    })()}
+                  </span>
+                  <span className="font-normal text-grains-muted">
+                    {activeMember.vocalPart}
                   </span>
                 </div>
 
@@ -485,7 +597,7 @@ export function EnsembleGrid({ members }: EnsembleGridProps) {
                   {activeMember.favoriteSong && (
                     <div className="flex items-start gap-2">
                       <Music className="w-3.5 h-3.5 text-grains-red mt-0.5 shrink-0" />
-                      <span className="text-grains-text/80">Fav Chart: {activeMember.favoriteSong}</span>
+                      <span className="text-grains-text/80">Favorite Grains Song: {activeMember.favoriteSong}</span>
                     </div>
                   )}
                   {activeMember.funFact && (

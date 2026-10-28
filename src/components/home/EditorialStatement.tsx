@@ -29,7 +29,7 @@ export function EditorialStatement({ content }: EditorialStatementProps) {
 
   const defaultPillars = [
     {
-      title: "Current Ensemble",
+      title: "Current Grains",
       description:
         "Explore the active vocal roster across Tenor 1, Tenor 2, Baritone, Bass, and Vocal Percussion.",
       href: "/members",

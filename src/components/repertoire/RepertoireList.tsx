@@ -53,7 +53,7 @@ export function RepertoireList({ items }: RepertoireListProps) {
                   : "bg-white hover:bg-grains-cream text-grains-black border border-grains-border"
               }`}
             >
-              Archived Charts ({items.filter((i) => i.status === "archived").length})
+              Past Repertoire ({items.filter((i) => i.status === "archived").length})
             </button>
             <button
               type="button"

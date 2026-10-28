@@ -5,7 +5,7 @@ import { SectionHeading } from "@/components/ui/SectionHeading";
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
 
 export const metadata: Metadata = {
-  title: "Current Ensemble & Members",
+  title: "Current Grains",
   description:
     "Meet the current voices of Grains of Time across Tenor 1, Tenor 2, Baritone, Bass, and Vocal Percussion.",
 };
@@ -20,7 +20,7 @@ export default async function MembersPage() {
 
   const activeMembers = members.filter((m) => m.status === "active");
 
-  const title = settings?.rosterHeading || "Current Ensemble";
+  const title = "Current Grains";
 
   return (
     <div className="py-16 sm:py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

@@ -124,7 +124,7 @@ export function EventsView({
                     </a>
                   ) : (
                     <span className="text-xs font-mono text-grains-muted tracking-wider uppercase font-medium">
-                      {event.isFree ? "Free Admission" : "Tickets At Door / TBA"}
+                      {event.isFree ? "Free Admission" : "Tickets TBA"}
                     </span>
                   )}
                 </div>
